@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днем Рождения!</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .animate-zoom-in { animation: zoomIn 0.5s ease-out forwards; }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+
+        
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+        .float-icon {
+            position: absolute;
+            opacity: 0;
+            animation: floatUp linear infinite;
+            z-index: -1;
+        }
+
+        
+        .progress-stripes {
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.15) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.15) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 1rem 1rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4 selection:bg-fuchsia-500 selection:text-white relative overflow-x-hidden">
+    
+    
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <i data-lucide="skull" class="float-icon text-red-500 w-16 h-16 left-[10%]" style="animation-duration: 25s; animation-delay: 0s;"></i>
+        <i data-lucide="flame" class="float-icon text-orange-500 w-24 h-24 left-[25%]" style="animation-duration: 22s; animation-delay: 5s;"></i>
+        <i data-lucide="sword" class="float-icon text-yellow-500 w-20 h-20 left-[85%]" style="animation-duration: 28s; animation-delay: 2s;"></i>
+        <i data-lucide="compass" class="float-icon text-cyan-500 w-16 h-16 left-[70%]" style="animation-duration: 20s; animation-delay: 8s;"></i>
+        <i data-lucide="ghost" class="float-icon text-lime-500 w-20 h-20 left-[40%]" style="animation-duration: 26s; animation-delay: 12s;"></i>
+        <i data-lucide="moon" class="float-icon text-indigo-500 w-16 h-16 left-[55%]" style="animation-duration: 24s; animation-delay: 4s;"></i>
+        <i data-lucide="heart-handshake" class="float-icon text-pink-500 w-24 h-24 left-[15%]" style="animation-duration: 27s; animation-delay: 15s;"></i>
+        <i data-lucide="paw-print" class="float-icon text-purple-500 w-16 h-16 left-[80%]" style="animation-duration: 21s; animation-delay: 10s;"></i>
+        <i data-lucide="wind" class="float-icon text-teal-500 w-20 h-20 left-[5%]" style="animation-duration: 23s; animation-delay: 18s;"></i>
+        <i data-lucide="key" class="float-icon text-amber-500 w-16 h-16 left-[50%]" style="animation-duration: 29s; animation-delay: 7s;"></i>
+    </div>
+
+    
+    <div id="app" class="w-full flex justify-center relative z-10"></div>
+
+    <script>
+        
+        const memories = [
+            {
+                id: 1,
+                game: "Dead by Daylight",
+                title: "Я гуль, сука, нахуй",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Прожить еще один год, не потеряв рассудок в Dead by daylight, и успешно выполнить все 4 скрытых условия. <br><br> Условия получения:<br> ✅ Завести генератор жизни на 99%, заложить фугаску и нагло дочинить его прямо на глазах у ослепленных проблем! 💥<br><br> ✅ Получить 100 хитов от Вескеров, которые без остановки облизывают текстуры. 🕶️ <br><br> ✅ Успешно избегать любых контактов с тиммейтами и маньяками, у которых официально подтвержден диагноз «Дура». 🚫 <br><br> ✅ Поймать струю от Красу, принять свою истинную форму и с гордостью заявить:<br> «Я Гуль, сука, нахуй!» 🤮👑 <br><br> Награда за выполнение: Бесконечный запас бладпоинтов, удача на орех в нужный момент, идеальный праздник и я — твой самый надежный напарник для любых каток! <br><br>С Днем Рождения, Вера! 🎉🖤 ",
+                icon: "skull",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not8UUbptJ_ebWk3Zk_MERUDq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotjlAHPaVPBcPA2kxMDv6DpK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotDdmlQ6kmeAeG8DLKdbTJ5686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotLApSHyRyNv0irh7keKueWK86MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotlOZ7cpH5l_dXrv7l7fyd7686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not9ZuFtUm8u2ld5OWtFWYgqq86MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not4ZR4FE-SLhqeo4V3G6Adn686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotzU6zFxsNGHSKoCxAuWDI7686MBY7COasyECvzYXAPSI"], 
+                videos: ["https://cdn.discordapp.com/attachments/1331959580573438035/1503739907573551134/1.mp4?ex=6a04726c&is=6a0320ec&hm=c9dbf21a6e9c133e8eb2d4c99ce69879687fe9776ac66885c8af2ce37f43cd8c&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745748251181197/2.mp4?ex=6a0477dc&is=6a03265c&hm=8b2c702c3d5d717aa319e346674725ffb742bf4dc2ea75852e2f92cb2a290442&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745771898409031/3.mp4?ex=6a0477e2&is=6a032662&hm=ed59155da62280726f8276d05a9c43f77e0268d1e9b6c309ad511224f3f4a951&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745785349800036/4.mp4?ex=6a0477e5&is=6a032665&hm=81c612521c991b667020bf1b68d1266dd3422aadf0c59317faccb5223de28134&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745798540759090/5.mp4?ex=6a0477e8&is=6a032668&hm=2aee6197bc486a0e3dc2c7f9593b1f8386b78f6a04f8a5e1a292ea3ed9c4fcbd&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745806367199242/6.mp4?ex=6a0477ea&is=6a03266a&hm=72f3ff1efac095c66ba835c08382970125bfa344ca55ef7bbb0e72f8326a2578&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745817595482142/7.mp4?ex=6a0477ed&is=6a03266d&hm=cf42521fcad4d7c37a537b4d797a410e6a3a15c8552be7638f2779fb274f87b1&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503758016036732971/8.mp4?ex=6a048349&is=6a0331c9&hm=4edf89e7ff90af657b6733634dadce63f744f95bf084aad10335458052e0c543&","https://cdn.discordapp.com/attachments/1331959580573438035/1503745857227325550/9.mp4?ex=6a0477f6&is=6a032676&hm=f4b786a84682e241e6544b5a179dbc880e069c688649c4bd805822b9d3c05c54&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745870569537566/10.mp4?ex=6a0477f9&is=6a032679&hm=0f81db26be07b599b7c677eb103306a0f1eb5dc17d4748972f94b48e740371f1&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745883160711248/11.mp4?ex=6a0477fc&is=6a03267c&hm=6179897c12166193bbf01eb659dd738c4201ed07a20775bc70884ead566fbba0&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503747170887536740/16.mp4?ex=6a04792f&is=6a0327af&hm=0fb92bc272d5703aa6f2b33f3e5443f246a17e7bf2e3011097449b66a3f13ff1&" ], 
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео из Dead by Daylight]",
+                colorClass: "bg-red-500/20 border-red-500 shadow-red-500/20",
+                textColorClass: "text-red-400"
+            },
+            {
+                id: 2,
+                game: "Escape Simulator",
+                title: "Мастера Побега",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Успешно выбраться из запертой комнаты под названием «Прошлый год», разгадать все головоломки взрослой жизни и перейти на следующий уровень. <br><br> Условия получения:<br> ✅ Собрать в инвентарь абсолютно весь хлам на локации (кружки, книги, глобусы), свято веря, что «это точно где-то пригодится для загадки!. 🗑️<br><br> ✅ Потратить 40 минут на построение гениальной математической теории для шифра, чтобы потом случайно найти нужный ключ под обычным ковриком. 🔑 <br><br> ✅ Перевернуть всю комнату вверх дном, разбить все вазы, тарелки и стекла чисто ради того, чтобы найти тот самый последний, никому не нужный спрятанный жетончик. 🏺 <br><br> ✅ Найти критически важный сюжетный предмет и со словами «Смотри, что я нашла!» случайно зашвырнуть его за текстуры или прямо в голову напарнику. 📦 <br><br> Награда за выполнение: Универсальная отмычка от всех дверей в реальной жизни, полное отсутствие таймеров на решение важных дел и твой бессменный кооп-напарник, который всегда поможет найти выход (ну, или мы вместе застрянем в комнате и будем просто кидаться друг в друга стульями). <br><br>С Днем Рождения, Вера! 🎉🗝️",
+                icon: "key",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotjQM_yvLBlMwY8865WPN1dq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Nots02XN2WrZPHgb_CuUBAon686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotpSF0sRMdr7VUCwOPZhBK9a86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotnWqy79XzntkI-tCfccv_oK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not4__DuWQoOOLCbfYFJ_mucK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotRI4NsB3XrXV-mKqofpo_4K86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotNhhiQLHyHBf71OdQsoaeyK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotP27QxSsD51o6A6HRigQVe686MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Вы с эльфом у камина]",
+                colorClass: "bg-amber-500/20 border-amber-500 shadow-amber-500/20",
+                textColorClass: "text-amber-400"
+            },
+            {
+                id: 3,
+                game: "Don't Starve Together",
+                title: "Дзёрдзь",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Пережить еще один год (целых 365 игровых дней!), не спалив собственную базу, и выжить после своих же гениальных идей. <br><br> Условия получения:<br> ✅ Построить «сверхэффективную» ферму пауков и энтов прямо у порога базы, чтобы регулярно с криками откидываться от своих же любимых соседей. 🕷️🌳<br><br> ✅ Застать эпичный лесной пожар, метаться в панике по локации и седеть на глазах от страха, молясь всем богам, чтобы огонь не сожрал сундуки с лутом и казан. 🔥😱 <br><br> ✅ Ни разу не съесть мясо монстра сырым, даже когда вокруг горит лес, а за спиной бежит злой энт. 🍖 <br><br> ✅ После всего этого стресса подбежать к Дзёрдзю, слушать его философское кряхтение и стоять в обнимку, чтобы хоть немного восстановить поехавшую кукуху. 🪰💜 <br><br> Награда за выполнение: Огнеупорная нервная система, база, которая никогда не сгорит, Дзёрдзь-антистресс и твой бессменный напарник, который всегда готов строить новые опасные фермы (и умирать на них вместе с тобой)! <br><br>С Днем Рождения, Вера! 🏕️🔥",
+                icon: "flame",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Noto-sYTrCmu5bk07VO_rznsa86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Notz7No67WKAGXCHPAs6re2ia86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotDUYG6SNsbiQrSHWJxLU40686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not2fDR2yyvcPLe4hilDZ5G_686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotjAcNfsYM1VVm8xTaBCHYH686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotpzcWxFcZQvnkreZdfie4Fa86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotxbHlrlE3BDrhXjk0YD2-x686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotiskEZzHjLyd-CwedL3eqra86MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Выживание в темноте / у костра]",
+                colorClass: "bg-orange-500/20 border-orange-500 shadow-orange-500/20",
+                textColorClass: "text-orange-400"
+            },
+            {
+                id: 4,
+                game: "The Elder Scrolls Online",
+                title: "Герои Тамриэля",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Исследовать весь Тамриэль и собрать коллекцию самых эпичных скриншотов, даже если для этого придется пожертвовать здоровьем напарника. <br><br> Условия получения:<br> ✅ Найти идеальный ракурс, выставить свет и кричать \«Стой так, не двигайся!\», пока твоего напарника на заднем фоне со вкусом и чавканьем грызет дикий медведь. 🐻<br><br> ✅ Героически стоять прямо в центре красной лужи, потому что именно оттуда падает лучшее освещение для нашей новой фотосессии, а хил как-нибудь справится! ✨ <br><br> ✅ Забить инвентарь до отказа кусками грязи, отмычками и тысячей рецептов, временно забив на спасение мира от очередного Даэдрического Принца. 🎒 <br><br> ✅ Доказать всему серверу, что наша традиция делать совместные \"фотки\" в каждой новой локации гораздо важнее прохождения подземелий. 🌅 <br><br>Награда за выполнение: Безлимитная подписка на удачу в реальной жизни, ручной боевой медведь, который будет кусать только твоих врагов (а не меня!), и твой личный карманный танк-фотомодель, готовый впитывать любой урон, пока ты настраиваешь камеру.<br><br> С Днем Рождения, Вера! ⚔️🛡️",
+                icon: "sword",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotFI0YUjEtnzx73Nlf1TK4xa86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotI7pCHZKZ1DB_33CImNgktq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotWR92c_Wdg284VwCBffeYdK86MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Красивый закат в ESO]",
+                colorClass: "bg-yellow-500/20 border-yellow-500 shadow-yellow-500/20",
+                textColorClass: "text-yellow-400"
+            },
+            {
+                id: 5,
+                game: "We Were Here",
+                title: "Хранитель традиции \"Сфоткаемся!\"",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Успешно пройти все части We Were Here, пережить пиковые моменты закипания, не разбить рацию и положить начало великой совместной фотохронике. <br><br> Условия получения:<br> ✅ Вместо того чтобы сорваться, громко и четко произнести магическое заклинание \"Сфоткаемся!\", мгновенно обнуляя всю агрессию и превращая провал в повод для смеха. 🤫✨<br><br> ✅ За секунду до неминуемой гибели, услышать в рацию супер-уверенное: \«БЕГИ НАЛЕВО!\», побежать налево, умереть в ловушке, потому что напарник опять перепутал лево и право... и потом долго и истерично ржать над этим в дискорде! 🧭 <br><br> ✅ Внимательно слушать по рации паническое описание стрелочных часов (\«ну тут большая палка смотрит вверх, а маленькая... эээ... на закорючку\»), громко смеяться и в итоге решить загадку самостоятельно. 🕒 <br><br> ✅ Пытаться пройти шахматную комнату с человеком, для которого конь — это просто \«лошадь, которая прыгает куда-то туда буквой Г\». Снова посмеяться до слез и взять спасение наших жизней в свои руки. ♟️<br><br> ✅ Успешно перенести эту спасительную традицию \"фотогравировать\" во все последующие игры, превращая каждый совместный момент в фотокарточку на память. 🖼️💛 <br><br> Награда за выполнение: Легендарный иммунитет к тупости тиммейтов, безлимитный запас терпения, фотоальбом, полный самых дурацких и веселых воспоминаний, и твой личный карманный напарник (я!), который всегда готов замереть в позе \"ну, мы типа тупим\" для новой фотки. <br><br> С Днем Рождения, Вера! 🏰🎙️",
+                icon: "compass",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotMjPk8Ewjbk5w8z_pcfUI2a86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Noty_0tMqNGZmOo0_wRA67uM686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotEHVi3pOJ1bTU33oBO1IKjq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotJEuY6pRVZF1UyoTM4rvt4K86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not293rHhSdXzGF7XZpb3o30a86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NottYRFwWoKEPowhMXjBCKoHq86MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: У таблички Perfect Partners]",
+                colorClass: "bg-cyan-500/20 border-cyan-500 shadow-cyan-500/20",
+                textColorClass: "text-cyan-400"
+            },
+            {
+                id: 6,
+                game: "Mimesis",
+                title: "Бросай всех, лутай туалетную бумагу!",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Пережить столкновение с самыми болтливыми мимиками на свете и совершить самую эпичную (и слегка преждевременную) эвакуацию. <br><br> Условия получения:<br> ✅ Сказать в микрофон абсолютную чушь, чтобы потом сидеть в темноте и слушать, как жуткий мимик бродит по коридорам и зловеще повторяет: \«Туалетная бумага... туалетная бумага...\» 🧻👻<br><br> ✅ Вместо того чтобы в ужасе спасаться от мимика, просто умереть со смеху, когда эта тварь идеально подделывает голос и выдает гениальную тактическую фразу: \«Это ты? Пойду полутаю\». 🎒😂 <br><br> ✅ Продемонстрировать чудеса командного выживания: средь бела дня торжественно решить, что тима уже сто процентов легла, завести транспорт и со спокойной душой уехать в закат, оставив абсолютно живых нас в шоке смотреть тебе вслед. 🚗💨👋 <br><br>Награда за выполнение: Бесконечный запас туалетной бумаги, антирадар от мимиков-лутеров и команда, которая всегда готова простить тебе внезапный побег, потому что с тобой смешно до слез даже тогда, когда нас бросают на растерзание монстрам! <br><br>С Днем Рождения, Вера! 🎙️👽",
+                icon: "ghost",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotlFqw8rrNO0hpPRRuWC1L4q86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not4qSgHB3sxHqIO02ruxg47q86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotDpXqtI27aVGuhD27obwDw686MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Смешной момент из Mimesis]",
+                colorClass: "bg-lime-500/20 border-lime-500 shadow-lime-500/20",
+                textColorClass: "text-lime-400"
+            },
+            {
+                id: 7,
+                game: "Reanimal",
+                title: "Улыбочку для чудовища",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Выжить на самом криповом острове, сбежать от всех жутких мутировавших животных и доказать, что наша традиция делать скриншоты сильнее любых детских кошмаров. <br><br> Условия получения:<br> ✅ В самый напряженный момент, когда за вами по пятам гонится хтоническая тварь из плоти и грязи, а мозг уже начинает закипать от ужаса, остановить панику священной фразой: «Так, падажи. Сфоткаемся!» 📸👹<br><br> ✅ Эпично позировать прямо перед лицом неминуемой гибели, потому что идеальный ракурс в коопе гораздо важнее какого-то там инстинкта самосохранения. ✌️💀 <br><br> ✅ Преодолеть все мрачные, липкие локации и головоломки, держась за руки (или вытаскивая друг друга за шкирку), и в очередной раз доказать, что вместе нам не страшен никакой скандинавский хоррор. 🤝🌑 <br><br>Награда за выполнение: Путевка на нормальный, солнечный курорт (где животные обычного размера и не хотят вас сожрать), железобетонная психика для будущих релизов и твой личный напарник, который всегда готов поработать приманкой для монстра, пока ты настраиваешь камеру для новой фотки!<br><br> С Днем Рождения, Вера! 🚤🖤",
+                icon: "moon",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotXRsnZX6jjLpeiHYTBidska86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotCHJqvVofTR5172fPk90mF686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NoterHpMApap_QH8Fdm573JUK86MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: В темноте с фонарем]",
+                colorClass: "bg-indigo-500/20 border-indigo-500 shadow-indigo-500/20",
+                textColorClass: "text-indigo-400"
+            },
+            {
+                id: 8,
+                game: "It Takes Two",
+                title: "Осьпс",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Починить отношения через тотальное разрушение психики плюшевых игрушек и пополнить свой лексикон самым универсальным словом на случай любой ошибки. <br><br> Условия получения:<br> ✅ Встретить ту самую пчелку, услышать от нее великое и философское «Осьпс», и сделать это слово нашим официальным ответом на любой жизненный провал или затуп. 🐝<br><br> ✅ Устроить самую жестокую сцену в истории видеоигр: хладнокровно оторвать милой плюшевой слонихе ухо и лапу, осознать, «какие мы твари», и вместо слез просто умереть со смеху от собственной безжалостности! 🐘✂️😈 <br><br> ✅ Разнести в щепки полдома, запытать пылесос, устроить войну с белками, но в итоге доказать, что наш кооп работает идеально (даже если мы ведем себя как абсолютные маньяки). 🔨🔥 <br><br> ✅ Даже во время совершения самых бесчеловечных преступлений над игрушками вовремя остановиться, посмотреть в камеру и сказать: «Сфоткаемся!» 📸 <br><br> Награда за выполнение: Искреннее прощение от всех покалеченных слоних, иммунитет к любым жизненным «Осьпс»-ситуациям и твой бессменный соучастник, с которым так весело и смешно творить абсолютную дичь! <br><br> С Днем Рождения, Вера! 🧶🐘",
+                icon: "heart-handshake",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotBBx21y6LPaFnSjTqWOucLq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotZwiYWEf1faJ27LNE2BfhVK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotYQJtaWbIQMVgZljfC_ubZ686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotXB4k_j0YTKiOjqQ0R1w2DK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotY3nfHyqRnHihoc0B4psz3a86MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Вы в роли кукол]",
+                colorClass: "bg-pink-500/20 border-pink-500 shadow-pink-500/20",
+                textColorClass: "text-pink-400"
+            },
+            {
+                id: 9,
+                game: "Haunted Paws",
+                title: "Следствие ведут желтые лапки!",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Спасти друга из жуткого особняка с привидениями, попутно доказав, что даже в самом страшном кооп-хорроре всегда найдется время для… естественных собачьих нужд! <br><br> Условия получения:<br> ✅ Эпично напрудить лужу прямо посреди коридора с призраками, а потом с гордостью носиться по всему уровню, оставляя за собой блестящие желтые следы. 🐾💦<br><br> ✅ Прокачать свой уровень собачьего мастерства до ранга «Профи» и научиться профессионально, прицельно и с чувством собственного достоинства метить все пожарные гидранты на пути! 🧯🐕 <br><br> ✅ Нарядиться в самые нелепые костюмчики и по нашей великой традиции сказать: «Сфоткаемся!» 📸👻 <br><br> Награда за выполнение: Золотой пожарный гидрант в личное пользование, бесконечный запас собачьих вкусняшек, отсутствие страха перед любыми привидениями и твой самый верный пушистый напарник, который всегда готов навести суету (и немного наследить) вместе с тобой! <br><br> С Днем Рождения, Вера! 🐶💛🦴",
+
+                icon: "paw-print",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not0O6IbvJG1_7doQDDH-J22K86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not-TrC4dtTF6cprBqgFlVUjq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotM0SKiJmOhSmQXAxGRwkM7K86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotHkJHH4bLAF1o1lIhd8Fpb686MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Скриншоты и видео: Два собакена]",
+                colorClass: "bg-purple-500/20 border-purple-500 shadow-purple-500/20",
+                textColorClass: "text-purple-400"
+            },
+            {
+                id: 10,
+                game: "Where Winds Meet",
+                title: "Утки в законе",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Покорить суровый мир древнего Китая, сломать систему уровней своей упертостью и познать дзен в местах не столь отдаленных. <br><br> Условия получения:<br> ✅ Будучи зелеными новичками 10-го уровня, бросить вызов боссу 30-го уровня. Эпично умирать, страдать, но после 50-ти попыток всё-таки забить его палками исключительно на чистом упрямстве! (Отступать — это не наш путь). ⚔️💪<br><br> ✅ Проигнорировать все пафосные доспехи и стильные наряды мастеров боевых искусств, чтобы гордо бегать по открытому миру в нелепых костюмах уточек. 🦆👘<br><br>✅ Отлететь от случайного игрока и с полным непониманием происходящего внезапно очнуться в тюрьме! Долго и истерично смеяться над абсурдностью местного правосудия. ⛓️😂 <br><br> ✅ Выйти по УДО, снова надеть утиный костюм, встать над поверженным высокоуровневым боссом и, как гласит древняя китайская мудрость нашего дуэта, сказать: «Сфоткаемся!» 📸🦆 <br><br> Награда за выполнение: Безграничный запас терпения для будущих хардкорных битв, ключи от всех виртуальных тюрем и твой верный напарник по квестам, который всегда готов переодеться в утку и тратить часы на непобедимых врагов вместе с тобой!<br><br>  С Днем Рождения, Вера! ⛩️💛🎐",
+                icon: "wind",
+                images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Note2Khqt05DSHV9S7ieDHZQ686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotOEOWhGBBIGw9OeG-Ek0HD686MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotYvjCEHQwSi5CAKfGBlnlh686MBY7COasyECvzYXAPSI"], 
+                videos: [],
+                audio: "", 
+                imagePlaceholder: "[Сюда можно загрузить фото-спойлер из Where winds meet!]",
+                colorClass: "bg-teal-500/20 border-teal-500 shadow-teal-500/20",
+                textColorClass: "text-teal-400"
+            }
+        ];
+
+        // === ЛОГИКА ИГРЫ ===
+        let currentScreen = 'intro';
+        let unlockedMemories = [];
+        let selectedMemory = null;
+        let currentImageIndex = 0;
+        let currentAudioPlayer = null; 
+
+        function stopCardAudio() {
+            if (currentAudioPlayer) {
+                currentAudioPlayer.pause();
+                currentAudioPlayer.currentTime = 0;
+                currentAudioPlayer = null;
+            }
+        }
+
+        // Функция для включения/выключения звука по кнопке
+        window.toggleAudio = function(e) {
+            e.stopPropagation();
+            if (!selectedMemory || !selectedMemory.audio) return;
+
+            const btn = document.getElementById('audio-toggle-btn');
+
+            if (currentAudioPlayer && !currentAudioPlayer.paused) {
+                currentAudioPlayer.pause();
+                if (btn) {
+                    btn.innerHTML = `<i data-lucide="play" class="w-5 h-5"></i><span>Включить звук</span>`;
+                    lucide.createIcons({root: btn});
+                }
+            } else {
+                if (!currentAudioPlayer) {
+                    currentAudioPlayer = new Audio(selectedMemory.audio);
+                    currentAudioPlayer.volume = 0.5;
+                    currentAudioPlayer.onended = function() {
+                        if (btn) {
+                            btn.innerHTML = `<i data-lucide="play" class="w-5 h-5"></i><span>Включить звук</span>`;
+                            lucide.createIcons({root: btn});
+                        }
+                    };
+                }
+                currentAudioPlayer.play().catch(e => console.log("Ошибка воспроизведения:", e));
+                if (btn) {
+                    btn.innerHTML = `<i data-lucide="pause" class="w-5 h-5"></i><span>Пауза</span>`;
+                    lucide.createIcons({root: btn});
+                }
+            }
+        };
+
+        // Генератор HTML для медиа (фото или видео)
+        function getMediaHtml(memory, index) {
+            const imagesCount = memory.images ? memory.images.length : 0;
+            
+            if (index < imagesCount) {
+                return `<img src="${memory.images[index]}" alt="${memory.title}" class="w-full h-full object-cover transition-opacity duration-300" />`;
+            } else {
+                const videoIndex = index - imagesCount;
+                const videoUrl = memory.videos[videoIndex];
+                
+                if (videoUrl.includes('youtube.com/watch') || videoUrl.includes('youtu.be/')) {
+                    let videoId = '';
+                    if (videoUrl.includes('youtube.com/watch')) {
+                        videoId = videoUrl.split('v=')[1].split('&')[0];
+                    } else if (videoUrl.includes('youtu.be/')) {
+                        videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
+                    }
+                    return `<iframe class="w-full h-full bg-black" src="https://www.youtube.com/embed/${videoId}?rel=0" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                }
+                
+                return `<video src="${videoUrl}" controls class="w-full h-full object-contain bg-black"></video>`;
+            }
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            let html = '';
+
+            // ЭКРАН 1: Приветствие
+            if (currentScreen === 'intro') {
+                html = `
+                    <div class="max-w-md w-full bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-xl p-8 text-center shadow-2xl animate-zoom-in relative overflow-hidden">
+                        <!-- Декоративные игровые элементы по углам -->
+                        <div class="absolute top-2 left-2 text-slate-700/50"><i data-lucide="wifi" class="w-5 h-5"></i></div>
+                        <div class="absolute top-2 right-2 text-emerald-500 font-mono text-xs font-bold tracking-widest">PING: 300ms</div>
+                        
+                        <div class="flex justify-center mb-6 relative mt-4">
+                            <div class="absolute inset-0 bg-fuchsia-500 blur-2xl opacity-20 rounded-full animate-pulse"></div>
+                            <i data-lucide="users" class="w-20 h-20 text-fuchsia-400 relative z-10 animate-bounce"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400">
+                            Кооперативное лобби
+                        </h1>
+                        <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                            <span class="text-slate-200 font-semibold">NezZzo ожидает вашего подключения для празднования Дня Рождения!</span>
+                        </p>
+                        <button onclick="setScreen('quest')" class="w-full py-4 bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white font-bold rounded-lg transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(192,38,211,0.5)]">
+                            <i data-lucide="log-in" class="w-5 h-5"></i> Подключиться к игре
+                        </button>
+                    </div>
+                `;
+            } 
+            // ЭКРАН 2: Выбор воспоминаний
+            else if (currentScreen === 'quest') {
+                const allUnlocked = unlockedMemories.length === memories.length;
+                const progress = (unlockedMemories.length / memories.length) * 100;
+
+                let cardsHtml = memories.map(memory => {
+                    const isUnlocked = unlockedMemories.includes(memory.id);
+                    const gridPosClass = memory.id === 10 ? "lg:col-start-2" : "";
+                    const baseClasses = `relative p-6 rounded-xl border-2 text-left transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer group ${gridPosClass} backdrop-blur-sm`;
+                    const activeClasses = isUnlocked ? `${memory.colorClass} shadow-lg` : "bg-slate-800/80 border-slate-700 hover:border-slate-500";
+                    const iconBgClasses = isUnlocked ? "bg-slate-900/50" : "bg-slate-700/80";
+                    const iconHtml = isUnlocked 
+                        ? `<i data-lucide="${memory.icon}" class="w-8 h-8 ${memory.textColorClass}"></i>`
+                        : `<i data-lucide="lock" class="w-8 h-8 text-slate-500"></i>`;
+                    const titleClass = isUnlocked ? memory.textColorClass : "text-slate-500";
+                    
+                    return `
+                        <div onclick="unlockMemory(${memory.id})" class="${baseClasses} ${activeClasses}">
+                            <div class="flex items-start gap-4">
+                                <div class="p-3 rounded-lg ${iconBgClasses} transition-colors border border-white/5">
+                                    ${iconHtml}
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold mb-1 ${titleClass}">
+                                        ${isUnlocked ? memory.title : 'Достижение заблокировано'}
+                                    </h3>
+                                    <p class="text-slate-400 text-sm font-medium">
+                                        ${isUnlocked ? memory.game : 'Кликните, чтобы разблокировать'}
+                                    </p>
+                                </div>
+                            </div>
+                            ${isUnlocked ? `<div class="absolute top-4 right-4 text-emerald-400 animate-zoom-in drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"><i data-lucide="check-circle-2" class="w-6 h-6"></i></div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                html = `
+                    <div class="max-w-6xl w-full animate-slide-up">
+                        <div class="text-center mb-10">
+                            <h2 class="text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 tracking-tight">
+                                ДОСТИЖЕНИЯ СОВМЕСТНЫХ ИГР
+                            </h2>
+                            <p class="text-slate-400 text-lg mb-6">
+                                Разблокируй все воспоминания, чтобы получить Платиновый Трофей!
+                            </p>
+                            
+                            <!-- Стилизованный прогресс-бар -->
+                            <div class="inline-flex flex-col items-center gap-2 bg-slate-800/80 backdrop-blur-sm p-4 rounded-xl border border-slate-700 shadow-xl min-w-[300px]">
+                                <div class="flex justify-between w-full text-sm font-bold text-slate-300 uppercase tracking-wider">
+                                    <span>Прогресс</span>
+                                    <span class="${allUnlocked ? 'text-emerald-400' : 'text-fuchsia-400'}">${unlockedMemories.length}/${memories.length}</span>
+                                </div>
+                                <div class="w-full h-4 bg-slate-900 rounded-full overflow-hidden border border-slate-700 shadow-inner p-0.5">
+                                    <div class="h-full rounded-full transition-all duration-700 relative overflow-hidden bg-gradient-to-r from-fuchsia-600 to-cyan-500" style="width: ${progress}%">
+                                        <div class="absolute inset-0 progress-stripes opacity-30 animate-[slide_1s_linear_infinite]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            ${cardsHtml}
+                        </div>
+
+                        ${allUnlocked ? `
+                            <div class="flex justify-center animate-slide-up mb-10">
+                                <button onclick="setScreen('final')" class="py-4 px-10 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black rounded-xl text-xl transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-emerald-300/50">
+                                    <i data-lucide="trophy" class="w-7 h-7"></i> ПОЛУЧИТЬ НАГРАДУ!
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } 
+            // ЭКРАН 3: Финальное поздравление
+            else if (currentScreen === 'final') {
+                html = `
+                    <div class="max-w-3xl w-full text-center animate-zoom-in">
+                        <div class="text-6xl mb-8 flex justify-center gap-6">
+                            <i data-lucide="sparkles" class="w-16 h-16 text-yellow-400 animate-bounce" style="animation-delay: 75ms;"></i>
+                            <i data-lucide="award" class="w-20 h-20 text-fuchsia-400 animate-bounce" style="animation-delay: 150ms;"></i>
+                            <i data-lucide="crown" class="w-16 h-16 text-cyan-400 animate-bounce" style="animation-delay: 300ms;"></i>
+                        </div>
+                        
+                        <h1 class="text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)] tracking-tighter">
+                            ПЛАТИНА ПОЛУЧЕНА!
+                        </h1>
+                        <p class="text-xl text-emerald-400 font-bold tracking-widest uppercase mb-10 drop-shadow-md">Achievement Unlocked: Идеальный тиммейт</p>
+                        
+                        <div class="bg-slate-800/90 backdrop-blur-md border-2 border-slate-600 rounded-3xl p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden text-left">
+                            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-fuchsia-500 via-yellow-400 to-cyan-500"></div>
+                            
+                            <h2 class="text-3xl font-black mb-8 text-white text-center">
+                                С Днем Рождения! 💛
+                            </h2>
+                            
+                            <div class="space-y-6 text-lg text-slate-300 leading-relaxed">
+                                <p>
+                                    Мы закрыли столько невероятных квестов вместе и каждый из них — это отдельное теплое воспоминание. С тобой совершенно не страшно выживать ни в каких мирах. Убегать от жутких маньяков, часами бить боссов в забавных костюмах уточек или пытаться не сойти с ума над очередной загадкой с часами — с тобой всё это превращается в самый лучший вечер.
+                                </p>
+                                <p>
+                                    Ты правда самый лучший, понимающий и родной напарник по коопу, о котором можно только мечтать. Даже когда мы творим какую-то нелепую дичь, жутко тупим или я покорно позирую, пока меня ест медведь — мы всегда смеемся до слез. А наша традиция забить на любую надвигающуюся катастрофу, улыбнуться и сказать «Так, падажи. Сфоткаемся!» — делает каждый наш скриншот самым ценным, согревающим душу лутом в моей коллекции.
+                                </p>
+                                <p class="space-y-6 text-lg text-slate-300 leading-relaxed">
+                                    Официально анонсирую запуск твоего личного, масштабного и очень счастливого DLC «Новый Год Жизни»! Желаю, чтобы в нем было поменьше багов, пинг всегда держался на нуле, жизненная стамина восстанавливалась мгновенно(желательно от вкусного кофе и хорошего сна),а удача всегда была прокачана на максимум. Впереди у нас еще столько непройденных миров и таких уютных, ламповых вечеров в Discord. Я всегда готов нажать кнопку готовности, куда бы мы ни отправились!
+                                </p>
+                            </div>
+
+                            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                                <div class="inline-flex items-center gap-2 bg-slate-900/80 px-6 py-3 rounded-xl border border-fuchsia-500/50 shadow-[0_0_15px_rgba(217,70,239,0.2)]">
+                                    <i data-lucide="gamepad-2" class="w-5 h-5 text-fuchsia-400"></i>
+                                    <span class="font-medium text-slate-200">Статус: <span class="text-fuchsia-400 font-bold">Готов к новым играм!</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            app.innerHTML = html;
+
+            // Модальное окно (когда кликаем на ачивку)
+            if (selectedMemory) {
+                const imagesCount = selectedMemory.images ? selectedMemory.images.length : 0;
+                const videosCount = selectedMemory.videos ? selectedMemory.videos.length : 0;
+                const totalMediaCount = imagesCount + videosCount;
+                
+                let mediaContentHtml = '';
+                if (totalMediaCount > 0) {
+                    mediaContentHtml = getMediaHtml(selectedMemory, currentImageIndex);
+                } else {
+                    mediaContentHtml = `<div class="text-slate-500 text-center px-8 border-2 border-dashed border-slate-700/50 rounded-xl py-12 mx-6 bg-slate-900/50 backdrop-blur-sm">
+                        <i data-lucide="image" class="w-16 h-16 mx-auto mb-4 text-slate-600 opacity-50"></i>
+                        <p class="text-sm font-medium tracking-wide uppercase">${selectedMemory.imagePlaceholder}</p>
+                       </div>`;
+                }
+
+                const hasMultipleMedia = totalMediaCount > 1;
+
+                const modalHtml = `
+                    <div id="modal-backdrop" onclick="closeModal(event)" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 z-50 animate-fade-in">
+                        <div class="bg-slate-800 border border-slate-600 rounded-2xl max-w-4xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl animate-zoom-in ring-1 ring-white/10" onclick="event.stopPropagation()">
+                            
+                            <div class="relative w-full aspect-video bg-black flex items-center justify-center border-b border-slate-700 overflow-hidden group shrink-0">
+                                
+                                <div id="media-container" class="w-full h-full absolute inset-0 flex items-center justify-center">
+                                    ${mediaContentHtml}
+                                </div>
+                                
+                                <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/60 p-2 rounded-full text-white hover:bg-slate-700 transition-colors backdrop-blur-md z-20 border border-white/20 hover:scale-110">
+                                    <i data-lucide="x" class="w-6 h-6"></i>
+                                </button>
+
+                                ${hasMultipleMedia ? `
+                                    <button onclick="prevImage(event)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 p-3 rounded-full text-white hover:bg-slate-700 transition-all backdrop-blur-md z-10 opacity-0 md:opacity-100 group-hover:opacity-100 border border-white/20 hover:scale-110">
+                                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                                    </button>
+                                    
+                                    <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 p-3 rounded-full text-white hover:bg-slate-700 transition-all backdrop-blur-md z-10 opacity-0 md:opacity-100 group-hover:opacity-100 border border-white/20 hover:scale-110">
+                                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                                    </button>
+
+                                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-10 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                                        ${Array.from({length: totalMediaCount}).map((_, idx) => `
+                                            <button onclick="setImage(${idx}, event)" class="carousel-dot w-3 h-3 rounded-full transition-all duration-300 ${idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/70'}"></button>
+                                        `).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <div class="p-6 md:p-8 overflow-y-auto bg-gradient-to-b from-slate-800 to-slate-900 relative">
+                                <div class="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
+                                    <i data-lucide="${selectedMemory.icon}" class="w-full h-full"></i>
+                                </div>
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-700 shadow-inner">
+                                        <i data-lucide="${selectedMemory.icon}" class="w-8 h-8 ${selectedMemory.textColorClass}"></i>
+                                    </div>
+                                    <h3 class="text-2xl md:text-4xl font-black ${selectedMemory.textColorClass} tracking-tight">
+                                        ${selectedMemory.title}
+                                    </h3>
+                                </div>
+                                <div class="mb-5 inline-block px-4 py-1.5 bg-slate-950/80 rounded-lg border border-slate-700/50 shadow-inner">
+                                    <span class="text-xs font-black text-slate-300 uppercase tracking-widest">${selectedMemory.game}</span>
+                                </div>
+                                <p class="text-slate-300 text-lg md:text-xl leading-relaxed font-medium relative z-10">
+                                    ${selectedMemory.desc}
+                                </p>
+                                
+                                ${selectedMemory.audio ? `
+                                    <div class="mt-8 border-t border-slate-700/50 pt-6">
+                                        <button id="audio-toggle-btn" onclick="toggleAudio(event)" class="inline-flex items-center gap-3 bg-gradient-to-r from-fuchsia-600 to-fuchsia-500 hover:from-fuchsia-500 hover:to-fuchsia-400 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(217,70,239,0.3)] active:scale-95 border border-fuchsia-400/50">
+                                            <i data-lucide="music" class="w-5 h-5"></i>
+                                            <span>Включить саундтрек</span>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            
+                        </div>
+                    </div>
+                `;
+                app.insertAdjacentHTML('beforeend', modalHtml);
+            }
+
+            
+            lucide.createIcons();
+        }
+
+        function updateCarouselUI() {
+            const container = document.getElementById('media-container');
+            if (container && selectedMemory) {
+                // Обновляем содержимое (фото или видео)
+                container.innerHTML = getMediaHtml(selectedMemory, currentImageIndex);
+            }
+            
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, idx) => {
+                if (idx === currentImageIndex) {
+                    dot.className = 'carousel-dot w-3 h-3 rounded-full transition-all duration-300 bg-white scale-125';
+                } else {
+                    dot.className = 'carousel-dot w-3 h-3 rounded-full transition-all duration-300 bg-white/40 hover:bg-white/70';
+                }
+            });
+        }
+
+        // Функции управления
+        window.setScreen = function(screen) {
+            currentScreen = screen;
+            render();
+        };
+
+        window.unlockMemory = function(id) {
+            if (!unlockedMemories.includes(id)) {
+                unlockedMemories.push(id);
+            }
+            
+            selectedMemory = memories.find(m => m.id === id);
+            currentImageIndex = 0;
+
+            render();
+        };
+
+        window.closeModal = function(e) {
+            if (!e || e.target.id === 'modal-backdrop' || e.target.closest('button[onclick="closeModal()"]')) {
+                selectedMemory = null;
+                stopCardAudio(); 
+                render();
+            }
+        };
+
+        // Функции карусели
+        window.prevImage = function(e) {
+            e.stopPropagation();
+            if (!selectedMemory) return;
+            
+            const imagesCount = selectedMemory.images ? selectedMemory.images.length : 0;
+            const videosCount = selectedMemory.videos ? selectedMemory.videos.length : 0;
+            const totalMediaCount = imagesCount + videosCount;
+            
+            if (totalMediaCount === 0) return;
+
+            currentImageIndex = (currentImageIndex - 1 + totalMediaCount) % totalMediaCount;
+            updateCarouselUI(); 
+        };
+
+        window.nextImage = function(e) {
+            e.stopPropagation(); 
+            if (!selectedMemory) return;
+            
+            const imagesCount = selectedMemory.images ? selectedMemory.images.length : 0;
+            const videosCount = selectedMemory.videos ? selectedMemory.videos.length : 0;
+            const totalMediaCount = imagesCount + videosCount;
+            
+            if (totalMediaCount === 0) return;
+
+            currentImageIndex = (currentImageIndex + 1) % totalMediaCount;
+            updateCarouselUI();
+        };
+
+        window.setImage = function(index, e) {
+            e.stopPropagation();
+            currentImageIndex = index;
+            updateCarouselUI();
+        };
+
+        
+        render();
+    </script>
+</body>
+</html>
