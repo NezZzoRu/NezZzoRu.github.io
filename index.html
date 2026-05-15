@@ -32,6 +32,29 @@
         }
 
         
+
+        body {
+            background:
+                radial-gradient(circle at top, rgba(168,85,247,0.15), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(6,182,212,0.15), transparent 40%),
+                #020617;
+            background-attachment: fixed;
+        }
+
+
+        .glass-glow {
+            box-shadow: 0 0 30px rgba(168,85,247,0.15);
+        }
+
+        @keyframes pulseGlow {
+            0%,100% { box-shadow: 0 0 20px rgba(217,70,239,0.2);}
+            50% { box-shadow: 0 0 40px rgba(34,211,238,0.35);}
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
         .progress-stripes {
             background-image: linear-gradient(
                 45deg,
@@ -45,7 +68,394 @@
             );
             background-size: 1rem 1rem;
         }
+
+        @keyframes dbdPointerSpin { from { transform: translate(-50%, -100%) rotate(0deg); } to { transform: translate(-50%, -100%) rotate(360deg); } }
+        @keyframes dangerPulse { 0%,100% { transform: scale(1); opacity: .85; } 50% { transform: scale(1.06); opacity: 1; } }
+        @keyframes pawStep { from { transform: translateY(0); opacity: .55; } to { transform: translateY(-7px); opacity: 1; } }
+
+        .dbd-skillcheck-pointer {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 4px;
+            height: 96px;
+            background: linear-gradient(to top, #ef4444, #f8fafc);
+            transform-origin: 50% 100%;
+            animation: dbdPointerSpin 1.85s linear infinite;
+            border-radius: 999px;
+            box-shadow: 0 0 18px rgba(239,68,68,.8);
+        }
+
+        .dbd-skillcheck-zone {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 26px;
+            height: 96px;
+            background: linear-gradient(to top, rgba(34,197,94,.95), rgba(34,197,94,.15));
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%) rotate(42deg);
+            border-radius: 999px;
+            box-shadow: 0 0 20px rgba(34,197,94,.6);
+        }
+
+        .challenge-glitch {
+            text-shadow: 2px 0 rgba(239,68,68,.8), -2px 0 rgba(34,211,238,.6);
+        }
+
+        .challenge-tile {
+            transition: transform .15s ease, border-color .15s ease, background .15s ease;
+        }
+        .challenge-tile:hover { transform: translateY(-2px) scale(1.02); }
+        .paw-target { animation: pawStep .55s ease-in-out infinite alternate; }
+        .escape-room-clutter {
+            transition: transform .15s ease, opacity .15s ease, border-color .15s ease;
+        }
+        .escape-room-clutter:hover { transform: scale(1.08) rotate(-2deg); }
+        .puzzle-piece-found {
+            opacity: .45;
+            border-color: rgba(52,211,153,.9) !important;
+            box-shadow: 0 0 18px rgba(52,211,153,.35);
+        }
+        .hydrant-button {
+            touch-action: none;
+            user-select: none;
+        }
+
+        .inventory-chip {
+            transition: transform .15s ease, border-color .15s ease, background .15s ease;
+        }
+        .inventory-chip:hover { transform: translateY(-2px); }
+        .inventory-empty-slot {
+            background-image: linear-gradient(135deg, rgba(148,163,184,.08) 25%, transparent 25%, transparent 50%, rgba(148,163,184,.08) 50%, rgba(148,163,184,.08) 75%, transparent 75%, transparent);
+            background-size: 16px 16px;
+        }
+
+        @keyframes chestGlow {
+            0%,100% { box-shadow: 0 0 22px rgba(250,204,21,.18), inset 0 0 18px rgba(250,204,21,.08); }
+            50% { box-shadow: 0 0 42px rgba(250,204,21,.45), inset 0 0 24px rgba(34,211,238,.12); }
+        }
+        @keyframes chestLidOpen {
+            0% { transform: translateY(0) rotateX(0deg); }
+            100% { transform: translateY(-18px) rotateX(42deg); }
+        }
+        @keyframes passportReveal {
+            from { opacity: 0; transform: translateY(24px) scale(.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .platinum-chest-card { animation: chestGlow 2.8s ease-in-out infinite; }
+        .platinum-chest-open .chest-lid { animation: chestLidOpen .7s ease-out forwards; transform-origin: bottom center; }
+        .passport-reveal { animation: passportReveal .55s ease-out forwards; }
+
+
+        /* === ВИЗУАЛЬНЫЙ СТИЛЬ: коллекционный альбом воспоминаний === */
+        .memory-album-shell {
+            background:
+                linear-gradient(135deg, rgba(15,23,42,.92), rgba(30,41,59,.82)),
+                radial-gradient(circle at 20% 10%, rgba(250,204,21,.12), transparent 34%),
+                radial-gradient(circle at 80% 0%, rgba(236,72,153,.12), transparent 30%);
+            border: 1px solid rgba(226,232,240,.14);
+            box-shadow: 0 24px 80px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.06);
+        }
+        .album-title-badge {
+            background: linear-gradient(135deg, rgba(250,204,21,.18), rgba(244,114,182,.10));
+            border: 1px solid rgba(250,204,21,.24);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        .memory-card-album {
+            min-height: 310px;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)),
+                rgba(15,23,42,.86);
+            box-shadow: 0 20px 50px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        .memory-card-album::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 1.15rem;
+            pointer-events: none;
+        }
+        .memory-photo-frame {
+            background: linear-gradient(135deg, rgba(248,250,252,.12), rgba(148,163,184,.04));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
+        }
+        .memory-photo-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 45%, rgba(2,6,23,.78));
+            pointer-events: none;
+        }
+        .memory-polaroid-pin {
+            transform: rotate(-3deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,.25);
+        }
+        .trophy-panel {
+            background:
+                linear-gradient(180deg, rgba(15,23,42,.88), rgba(2,6,23,.74)),
+                radial-gradient(circle at top, rgba(250,204,21,.10), transparent 45%);
+            border: 1px solid rgba(226,232,240,.12);
+            box-shadow: 0 18px 55px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.07);
+        }
+        .trophy-slot {
+            min-height: 104px;
+            transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+        }
+        .trophy-slot:hover { transform: translateY(-2px); }
+        .trophy-slot-open {
+            background: linear-gradient(145deg, rgba(250,204,21,.10), rgba(15,23,42,.82));
+            box-shadow: 0 0 24px rgba(250,204,21,.10), inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        .trophy-slot-locked {
+            background:
+                repeating-linear-gradient(135deg, rgba(148,163,184,.055) 0 8px, transparent 8px 16px),
+                rgba(15,23,42,.48);
+        }
+        .final-award-shell {
+            background:
+                radial-gradient(circle at top, rgba(250,204,21,.18), transparent 36%),
+                linear-gradient(145deg, rgba(15,23,42,.94), rgba(2,6,23,.92));
+            border: 1px solid rgba(250,204,21,.28);
+            box-shadow: 0 30px 90px rgba(0,0,0,.45), 0 0 70px rgba(250,204,21,.10), inset 0 1px 0 rgba(255,255,255,.09);
+        }
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(250,204,21,.75), transparent);
+        }
+        .passport-gold-card {
+            background:
+                linear-gradient(145deg, rgba(120,53,15,.30), rgba(15,23,42,.92)),
+                radial-gradient(circle at 10% 0%, rgba(250,204,21,.18), transparent 36%);
+            border: 1px solid rgba(250,204,21,.34);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 20px 60px rgba(0,0,0,.34);
+        }
+        .title-medal {
+            background: linear-gradient(135deg, rgba(250,204,21,.12), rgba(15,23,42,.78));
+            border: 1px solid rgba(250,204,21,.18);
+        }
+
+
+        /* === ДОПОЛНИТЕЛЬНЫЙ ИНТЕРАКТИВ: настроение сайта от прогресса === */
+        body {
+            transition: background 900ms ease, filter 900ms ease;
+        }
+        body.mood-stage-0 {
+            background:
+                radial-gradient(circle at top, rgba(168,85,247,0.10), transparent 36%),
+                radial-gradient(circle at bottom right, rgba(6,182,212,0.08), transparent 36%),
+                #020617;
+        }
+        body.mood-stage-1 {
+            background:
+                radial-gradient(circle at top left, rgba(168,85,247,0.18), transparent 42%),
+                radial-gradient(circle at bottom right, rgba(6,182,212,0.16), transparent 44%),
+                #020617;
+        }
+        body.mood-stage-2 {
+            background:
+                radial-gradient(circle at top left, rgba(217,70,239,0.24), transparent 45%),
+                radial-gradient(circle at bottom right, rgba(34,211,238,0.24), transparent 45%),
+                radial-gradient(circle at center, rgba(250,204,21,0.08), transparent 55%),
+                #020617;
+        }
+        body.mood-stage-3 {
+            background:
+                radial-gradient(circle at top left, rgba(217,70,239,0.32), transparent 45%),
+                radial-gradient(circle at bottom right, rgba(34,211,238,0.32), transparent 45%),
+                radial-gradient(circle at center, rgba(250,204,21,0.16), transparent 52%),
+                #020617;
+        }
+        body.mood-stage-3 .float-icon { filter: drop-shadow(0 0 12px currentColor); }
+
+        /* === ДОПОЛНИТЕЛЬНЫЙ ИНТЕРАКТИВ: живой пинг и звуки интерфейса === */
+        @keyframes pingBlink {
+            0%,100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: .68; transform: translateY(-1px); }
+        }
+        @keyframes packetLossShake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+        .ping-live {
+            animation: pingBlink 1.1s ease-in-out infinite;
+            text-shadow: 0 0 10px currentColor;
+            transition: color .25s ease, text-shadow .25s ease;
+        }
+        .ping-danger {
+            animation: packetLossShake .28s ease-in-out 2, pingBlink 1.1s ease-in-out infinite;
+        }
+        .sfx-pop {
+            animation: zoomIn .25s ease-out forwards;
+        }
+
+        /* === ДОПОЛНИТЕЛЬНЫЙ ИНТЕРАКТИВ: режим стримера, скриншот и галерея === */
+        @keyframes livePulse { 0%,100% { opacity: 1; box-shadow: 0 0 18px rgba(239,68,68,.45); } 50% { opacity: .65; box-shadow: 0 0 5px rgba(239,68,68,.25); } }
+        @keyframes chatLineIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes loadingScan { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .live-dot { animation: livePulse 1.1s ease-in-out infinite; }
+        .stream-chat-line { animation: chatLineIn .35s ease-out forwards; }
+        .loading-scan::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); animation: loadingScan 1.1s linear infinite; }
+        .screenshot-mode .no-screenshot,
+        .screenshot-mode .float-icon,
+        .screenshot-mode #streamer-overlay { display: none !important; }
+        .screenshot-mode #app { max-width: 1180px; margin-inline: auto; }
+        .screenshot-mode body { overflow: hidden; }
+        .trophy-card { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
+        .trophy-card:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(148,163,184,.12); }
+
+
+        /* === ДОПОЛНИТЕЛЬНЫЙ ИНТЕРАКТИВ: фоны карточек и титры === */
+        @keyframes creditRoll { from { transform: translateY(18px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes subtleGlitch { 0%,100% { transform: translate(0); filter: hue-rotate(0deg); } 25% { transform: translate(1px,-1px); } 50% { transform: translate(-1px,1px); filter: hue-rotate(8deg); } 75% { transform: translate(1px,1px); } }
+        @keyframes fireFlicker { 0%,100% { opacity: .35; transform: scale(1); } 50% { opacity: .62; transform: scale(1.04); } }
+        @keyframes windDrift { from { transform: translateX(-12%); opacity: .18; } to { transform: translateX(12%); opacity: .34; } }
+        .credits-line { animation: creditRoll .45s ease-out forwards; }
+        .game-modal-shell { position: relative; isolation: isolate; }
+        .game-modal-shell::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .9; }
+        .game-modal-shell > * { position: relative; z-index: 1; }
+        .game-theme-1::before { background: radial-gradient(circle at 12% 12%, rgba(239,68,68,.34), transparent 38%), repeating-linear-gradient(90deg, rgba(239,68,68,.06) 0 2px, transparent 2px 10px); animation: subtleGlitch 2.8s infinite; }
+        .game-theme-2::before { background: radial-gradient(circle at 85% 12%, rgba(245,158,11,.34), transparent 36%), linear-gradient(135deg, rgba(245,158,11,.08) 25%, transparent 25%, transparent 50%, rgba(245,158,11,.08) 50%, rgba(245,158,11,.08) 75%, transparent 75%); background-size: auto, 28px 28px; }
+        .game-theme-3::before { background: radial-gradient(circle at 50% 100%, rgba(249,115,22,.46), transparent 42%), radial-gradient(circle at 20% 20%, rgba(251,191,36,.18), transparent 30%); animation: fireFlicker 1.8s ease-in-out infinite; }
+        .game-theme-4::before { background: radial-gradient(circle at 80% 18%, rgba(234,179,8,.32), transparent 36%), linear-gradient(120deg, transparent, rgba(250,204,21,.10), transparent); }
+        .game-theme-5::before { background: radial-gradient(circle at 15% 20%, rgba(34,211,238,.30), transparent 40%), repeating-linear-gradient(45deg, rgba(34,211,238,.07) 0 1px, transparent 1px 18px); }
+        .game-theme-6::before { background: radial-gradient(circle at 80% 18%, rgba(132,204,22,.28), transparent 36%), radial-gradient(circle at 25% 80%, rgba(190,242,100,.14), transparent 36%); animation: subtleGlitch 3.4s infinite; }
+        .game-theme-7::before { background: radial-gradient(circle at 70% 20%, rgba(129,140,248,.34), transparent 38%), linear-gradient(180deg, rgba(15,23,42,.10), rgba(49,46,129,.26)); }
+        .game-theme-8::before { background: radial-gradient(circle at 20% 15%, rgba(236,72,153,.30), transparent 36%), radial-gradient(circle at 80% 70%, rgba(244,114,182,.18), transparent 34%); }
+        .game-theme-9::before { background: radial-gradient(circle at 78% 18%, rgba(168,85,247,.28), transparent 34%), repeating-linear-gradient(135deg, rgba(250,204,21,.08) 0 2px, transparent 2px 18px); }
+        .game-theme-10::before { background: radial-gradient(circle at 80% 18%, rgba(20,184,166,.34), transparent 36%), linear-gradient(90deg, rgba(20,184,166,.12), transparent, rgba(250,204,21,.10)); animation: windDrift 4s ease-in-out infinite alternate; }
+        .credits-backdrop { background: radial-gradient(circle at top, rgba(250,204,21,.14), transparent 44%), rgba(2,6,23,.94); }
+
+
+        /* === НОВЫЙ ФИНАЛ: кинематографичный финальный экран === */
+        @keyframes cinematicRise {
+            from { opacity: 0; transform: translateY(18px) scale(.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes goldenBreath {
+            0%,100% { opacity: .45; transform: translate(-50%, 0) scale(1); }
+            50% { opacity: .8; transform: translate(-50%, 0) scale(1.08); }
+        }
+        .final-cinematic-shell {
+            background:
+                radial-gradient(circle at top, rgba(250,204,21,.20), transparent 24%),
+                radial-gradient(circle at 50% 16%, rgba(255,241,181,.12), transparent 28%),
+                linear-gradient(180deg, rgba(2,6,23,.96), rgba(15,23,42,.94));
+            border: 1px solid rgba(250,204,21,.26);
+            box-shadow: 0 35px 100px rgba(0,0,0,.55), 0 0 80px rgba(250,204,21,.10), inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        .final-spotlight {
+            position: absolute;
+            left: 50%;
+            top: -30px;
+            width: 520px;
+            height: 240px;
+            background: radial-gradient(circle, rgba(250,204,21,.20), rgba(250,204,21,.05) 40%, transparent 72%);
+            filter: blur(22px);
+            animation: goldenBreath 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .final-reveal-card,
+        .final-message-card,
+        .album-story-card {
+            animation: cinematicRise .8s ease-out forwards;
+        }
+        .chapter-ribbon {
+            background: linear-gradient(135deg, rgba(250,204,21,.16), rgba(244,114,182,.12));
+            border: 1px solid rgba(250,204,21,.20);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+        }
+        .undeveloped-frame {
+            background:
+                linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+                repeating-linear-gradient(135deg, rgba(148,163,184,.10) 0 10px, rgba(15,23,42,.62) 10px 20px),
+                rgba(15,23,42,.88);
+        }
+        .final-quote {
+            border-left: 3px solid rgba(250,204,21,.55);
+            background: linear-gradient(90deg, rgba(250,204,21,.08), transparent 70%);
+        }
+
+
+        /* === АЛЬБОМНЫЙ СТИЛЬ КАРТОЧЕК ВОСПОМИНАНИЙ === */
+        .memory-album-shell {
+            position: relative;
+            isolation: isolate;
+        }
+        .memory-album-shell::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .32;
+            mix-blend-mode: screen;
+            background-image:
+                radial-gradient(circle at 18% 22%, rgba(255,255,255,.055) 0 1px, transparent 1px),
+                radial-gradient(circle at 76% 48%, rgba(255,255,255,.035) 0 1px, transparent 1px),
+                linear-gradient(115deg, rgba(255,255,255,.035), transparent 38%, rgba(250,204,21,.025));
+            background-size: 18px 18px, 27px 27px, 100% 100%;
+            border-radius: inherit;
+        }
+        .memory-album-shell > * {
+            position: relative;
+            z-index: 1;
+        }
+        .album-page-corner {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            border-color: rgba(250,204,21,.24);
+            pointer-events: none;
+            z-index: 2;
+        }
+        .album-page-corner.tl { top: 14px; left: 14px; border-top: 1px solid; border-left: 1px solid; border-top-left-radius: 18px; }
+        .album-page-corner.tr { top: 14px; right: 14px; border-top: 1px solid; border-right: 1px solid; border-top-right-radius: 18px; }
+        .album-page-corner.bl { bottom: 14px; left: 14px; border-bottom: 1px solid; border-left: 1px solid; border-bottom-left-radius: 18px; }
+        .album-page-corner.br { bottom: 14px; right: 14px; border-bottom: 1px solid; border-right: 1px solid; border-bottom-right-radius: 18px; }
+        .polaroid-frame {
+            background: linear-gradient(180deg, rgba(248,250,252,.92), rgba(226,232,240,.82));
+            padding: 9px 9px 34px;
+            transform: rotate(-.7deg);
+            box-shadow: 0 18px 38px rgba(0,0,0,.30), 0 0 0 1px rgba(255,255,255,.14) inset;
+        }
+        .memory-card-album:nth-child(even) .polaroid-frame { transform: rotate(.85deg); }
+        .memory-card-album:hover .polaroid-frame { transform: rotate(0deg) translateY(-2px); }
+        .photo-caption {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 8px;
+            z-index: 12;
+            color: rgba(15,23,42,.82);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .album-tape {
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            width: 72px;
+            height: 20px;
+            transform: translateX(-50%) rotate(-2deg);
+            z-index: 14;
+            border-radius: 5px;
+            background: rgba(250,250,210,.50);
+            border: 1px solid rgba(255,255,255,.24);
+            box-shadow: 0 6px 18px rgba(0,0,0,.18);
+            backdrop-filter: blur(2px);
+        }
+
+
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4 selection:bg-fuchsia-500 selection:text-white relative overflow-x-hidden">
     
@@ -73,10 +483,10 @@
                 id: 1,
                 game: "Dead by Daylight",
                 title: "Я гуль, сука, нахуй",
-                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Прожить еще один год, не потеряв рассудок в Dead by daylight, и успешно выполнить все 4 скрытых условия. <br><br> Условия получения:<br> ✅ Завести генератор жизни на 99%, заложить фугаску и нагло дочинить его прямо на глазах у ослепленных проблем! 💥<br><br> ✅ Получить 100 хитов от Вескеров, которые без остановки облизывают текстуры. 🕶️ <br><br> ✅ Успешно избегать любых контактов с тиммейтами и маньяками, у которых официально подтвержден диагноз «Дура». 🚫 <br><br> ✅ Поймать струю от Красу, принять свою истинную форму и с гордостью заявить:<br> «Я Гуль, сука, нахуй!» 🤮👑 <br><br> Награда за выполнение: Бесконечный запас бладпоинтов, удача на орех в нужный момент, идеальный праздник и я — твой самый надежный напарник для любых каток! <br><br>С Днем Рождения, Вера! 🎉🖤 ",
+                desc: "ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО <br><br> Описание достижения: Прожить еще один год, не потеряв рассудок в Dead by daylight, и успешно выполнить все 4 скрытых условия. <br><br> Условия получения:<br> ✅ Завести генератор жизни на 99%, заложить фугаску и нагло дочинить его прямо на глазах у ослепленных проблем! 💥<br><br> ✅ Получить 100 хитов от Вескеров-пидоров, которые без остановки облизывают текстуры. 🕶️ <br><br> ✅ Успешно избегать любых контактов с тиммейтами и маньяками, у которых официально подтвержден диагноз «Дура». 🚫 <br><br> ✅ Поймать струю от Красу, принять свою истинную форму и с гордостью заявить:<br> «Я Гуль, сука, нахуй!» 🤮👑 <br><br> Награда за выполнение: Бесконечный запас бладпоинтов, удача на орех в нужный момент, идеальный праздник и я — твой самый надежный напарник для любых каток! <br><br>С Днем Рождения, Вера! 🎉🖤 ",
                 icon: "skull",
                 images: ["https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not8UUbptJ_ebWk3Zk_MERUDq86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotjlAHPaVPBcPA2kxMDv6DpK86MBY7COasyECvzYXAPSI","https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotDdmlQ6kmeAeG8DLKdbTJ5686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotLApSHyRyNv0irh7keKueWK86MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotlOZ7cpH5l_dXrv7l7fyd7686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not9ZuFtUm8u2ld5OWtFWYgqq86MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2Not4ZR4FE-SLhqeo4V3G6Adn686MBY7COasyECvzYXAPSI", "https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotzU6zFxsNGHSKoCxAuWDI7686MBY7COasyECvzYXAPSI"], 
-                videos: ["https://cdn.discordapp.com/attachments/1331959580573438035/1503739907573551134/1.mp4?ex=6a04726c&is=6a0320ec&hm=c9dbf21a6e9c133e8eb2d4c99ce69879687fe9776ac66885c8af2ce37f43cd8c&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745748251181197/2.mp4?ex=6a0477dc&is=6a03265c&hm=8b2c702c3d5d717aa319e346674725ffb742bf4dc2ea75852e2f92cb2a290442&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745771898409031/3.mp4?ex=6a0477e2&is=6a032662&hm=ed59155da62280726f8276d05a9c43f77e0268d1e9b6c309ad511224f3f4a951&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745785349800036/4.mp4?ex=6a0477e5&is=6a032665&hm=81c612521c991b667020bf1b68d1266dd3422aadf0c59317faccb5223de28134&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745798540759090/5.mp4?ex=6a0477e8&is=6a032668&hm=2aee6197bc486a0e3dc2c7f9593b1f8386b78f6a04f8a5e1a292ea3ed9c4fcbd&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745806367199242/6.mp4?ex=6a0477ea&is=6a03266a&hm=72f3ff1efac095c66ba835c08382970125bfa344ca55ef7bbb0e72f8326a2578&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745817595482142/7.mp4?ex=6a0477ed&is=6a03266d&hm=cf42521fcad4d7c37a537b4d797a410e6a3a15c8552be7638f2779fb274f87b1&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503758016036732971/8.mp4?ex=6a048349&is=6a0331c9&hm=4edf89e7ff90af657b6733634dadce63f744f95bf084aad10335458052e0c543&","https://cdn.discordapp.com/attachments/1331959580573438035/1503745857227325550/9.mp4?ex=6a0477f6&is=6a032676&hm=f4b786a84682e241e6544b5a179dbc880e069c688649c4bd805822b9d3c05c54&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745870569537566/10.mp4?ex=6a0477f9&is=6a032679&hm=0f81db26be07b599b7c677eb103306a0f1eb5dc17d4748972f94b48e740371f1&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503745883160711248/11.mp4?ex=6a0477fc&is=6a03267c&hm=6179897c12166193bbf01eb659dd738c4201ed07a20775bc70884ead566fbba0&", "https://cdn.discordapp.com/attachments/1331959580573438035/1503747170887536740/16.mp4?ex=6a04792f&is=6a0327af&hm=0fb92bc272d5703aa6f2b33f3e5443f246a17e7bf2e3011097449b66a3f13ff1&" ], 
+                videos: [""videos/1.mp4","videos/2.mp4","videos/3.mp4","videos/4.mp4","videos/5.mp4","videos/6.mp4","videos/7.mp4","videos/8.mp4","videos/9.mp4","videos/10.mp4","videos/11.mp4","videos/16.mp4" ], 
                 audio: "", 
                 imagePlaceholder: "[Скриншоты и видео из Dead by Daylight]",
                 colorClass: "bg-red-500/20 border-red-500 shadow-red-500/20",
@@ -206,8 +616,280 @@
         let currentScreen = 'intro';
         let unlockedMemories = [];
         let selectedMemory = null;
+        let challengeMemory = null;
+        let challengeState = {};
         let currentImageIndex = 0;
-        let currentAudioPlayer = null; 
+        let currentAudioPlayer = null;
+        let platinumChestOpen = false;
+        let godModeBuffer = '';
+        const GOD_MODE_CODE = 'ягуль';
+        let streamerMode = false;
+        let screenshotMode = false;
+        let trophyGalleryOpen = false;
+        let loadingTargetScreen = null;
+        let loadingMessageIndex = 0;
+        let creditsOpen = false;
+
+        const inventoryItems = {
+            1: { name: 'Фугаска', emoji: '💥' },
+            2: { name: 'Кусок пазла', emoji: '🧩' },
+            3: { name: 'Факел', emoji: '🔥' },
+            4: { name: 'Отмычка', emoji: '🔓' },
+            5: { name: 'Рация', emoji: '🎙️' },
+            6: { name: 'Туалетная бумага', emoji: '🧻' },
+            7: { name: 'Фонарик', emoji: '🔦' },
+            8: { name: 'Осьпс-пчела', emoji: '🐝' },
+            9: { name: 'Золотой гидрант', emoji: '🚰' },
+            10: { name: 'Утиная маска', emoji: '🦆' }
+        };
+
+
+        const playerTitles = {
+            1: { title: 'Гуль года', tag: 'Мастер скилчеков и бладпоинтов' },
+            2: { title: 'Мастер побега', tag: 'Находит пазлы даже среди абсолютного хлама' },
+            3: { title: 'Хранитель костра', tag: 'Не дает базе сгореть окончательно' },
+            4: { title: 'Фотомодель Тамриэля', tag: 'Идеальный кадр важнее медведя' },
+            5: { title: 'Оператор рации', tag: 'Лево, право и паника под контролем' },
+            6: { title: 'Специалист по мимикам', tag: 'Узнает тиммейта по туалетной бумаге' },
+            7: { title: 'Улыбка перед чудовищем', tag: 'Не боится криповых островов' },
+            8: { title: 'Соучастник Осьпса', tag: 'Кооп-синхронизация на максималках' },
+            9: { title: 'Профи гидрантов', tag: 'Оставляет легендарные желтые следы' },
+            10: { title: 'Утка в законе', tag: 'Бьет боссов упрямством и стилем' }
+        };
+
+
+        // === ЗВУКИ ИНТЕРФЕЙСА ===
+        let interfaceAudioContext = null;
+
+        function getInterfaceAudioContext() {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return null;
+            if (!interfaceAudioContext) interfaceAudioContext = new AudioContextClass();
+            if (interfaceAudioContext.state === 'suspended') interfaceAudioContext.resume().catch(() => {});
+            return interfaceAudioContext;
+        }
+
+        function playTone(freq, duration = 0.08, type = 'sine', gainValue = 0.045, delay = 0) {
+            const ctx = getInterfaceAudioContext();
+            if (!ctx) return;
+            const oscillator = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const start = ctx.currentTime + delay;
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.0001, start);
+            gain.gain.exponentialRampToValueAtTime(gainValue, start + 0.012);
+            gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+            oscillator.connect(gain);
+            gain.connect(ctx.destination);
+            oscillator.start(start);
+            oscillator.stop(start + duration + 0.025);
+        }
+
+        function playUiSound(kind = 'click') {
+            try {
+                switch (kind) {
+                    case 'success':
+                        playTone(523.25, 0.08, 'triangle', 0.05, 0);
+                        playTone(659.25, 0.08, 'triangle', 0.05, 0.09);
+                        playTone(783.99, 0.12, 'triangle', 0.055, 0.18);
+                        break;
+                    case 'fail':
+                        playTone(220, 0.12, 'sawtooth', 0.035, 0);
+                        playTone(146.83, 0.16, 'sawtooth', 0.03, 0.11);
+                        break;
+                    case 'chest':
+                        playTone(392, 0.09, 'triangle', 0.045, 0);
+                        playTone(523.25, 0.1, 'triangle', 0.05, 0.1);
+                        playTone(659.25, 0.12, 'triangle', 0.055, 0.22);
+                        playTone(987.77, 0.18, 'sine', 0.04, 0.34);
+                        break;
+                    case 'god':
+                        playTone(110, 0.18, 'sawtooth', 0.04, 0);
+                        playTone(220, 0.14, 'sawtooth', 0.04, 0.16);
+                        playTone(440, 0.12, 'triangle', 0.055, 0.31);
+                        playTone(880, 0.18, 'sine', 0.05, 0.45);
+                        break;
+                    case 'unlock':
+                        playTone(330, 0.06, 'square', 0.035, 0);
+                        playTone(660, 0.1, 'triangle', 0.045, 0.07);
+                        break;
+                    default:
+                        playTone(440, 0.035, 'square', 0.018, 0);
+                        playTone(660, 0.035, 'square', 0.014, 0.035);
+                }
+            } catch (error) {
+                console.log('SFX недоступны:', error);
+            }
+        }
+
+        // === ЖИВОЙ PING НА СТАРТОВОМ ЭКРАНЕ ===
+        const pingPhrases = [
+            { text: 'PING: 24ms', className: 'text-emerald-400' },
+            { text: 'PING: 47ms', className: 'text-emerald-400' },
+            { text: 'PING: 128ms', className: 'text-cyan-300' },
+            { text: 'PING: 300ms', className: 'text-yellow-300' },
+            { text: 'PING: 777ms', className: 'text-orange-300' },
+            { text: 'PING: 999ms', className: 'text-red-300 ping-danger' },
+            { text: 'SERVER: COOP-LOBBY ONLINE', className: 'text-cyan-300' }
+        ];
+
+        const loadingMessages = [
+            'Подключение к Discord...',
+            'Синхронизация мемов...',
+            'Проверка уровня кринжа...',
+            'Загрузка совместных сохранений...',
+            'Настройка пинга 300 ms...',
+            'Напарник нажимает готовность...'
+        ];
+
+
+        const creditLines = [
+            ['Главный тиммейт', 'Chich_Play'],
+            ['Создатель лобби', 'NezZzo'],
+            ['Ответственный за тупление', 'Кооп-дуэт в полном составе'],
+            ['Отдел утиных костюмов', 'Where Winds Meet'],
+            ['Поставщик скилчеков', 'Dead by Daylight'],
+            ['Департамент стульев и загадок', 'Escape Simulator'],
+            ['Служба пожарной безопасности', 'Don’t Starve Together'],
+            ['Отдел “лево — это другое лево”', 'We Were Here'],
+            ['Главный саундтрек', 'Смех в Discord'],
+            ['Следующее DLC', 'Новый год жизни']
+        ];
+
+        const streamerChatMessages = [
+            ['viewer_01', 'жми скилчек!'],
+            ['duck_main', 'уточка имба 🦆'],
+            ['totem_hunter', 'не стой в красном... хотя стой красиво'],
+            ['radio_left', 'налево! другое налево!'],
+            ['loot_goblin', 'пойду полутаю'],
+            ['hydrant_pro', 'гидрант помечен профессионально'],
+            ['osps_bee', 'осьпс'],
+            ['mod_nezzzo', 'кооп стабильный, паника штатная']
+        ];
+
+
+        function updatePingStatus() {
+            const ping = document.getElementById('ping-status');
+            if (!ping) return;
+            const item = pingPhrases[Math.floor(Math.random() * pingPhrases.length)];
+            ping.className = `absolute top-2 right-2 font-mono text-xs font-bold tracking-widest ping-live ${item.className}`;
+            ping.textContent = item.text;
+        }
+
+
+        function getModalThemeClass(memory) {
+            return memory ? `game-modal-shell game-theme-${memory.id}` : 'game-modal-shell';
+        }
+
+        function getModalThemeLabel(memory) {
+            const labels = {
+                1: '',
+                2: '',
+                3: '',
+                4: '',
+                5: '',
+                6: '',
+                7: '',
+                8: '',
+                9: '',
+                10: ''
+            };
+            return labels[memory?.id] || '';
+        }
+
+        function renderUtilityButtons() {
+            return '';
+        }
+
+        function renderStreamerOverlay() {
+            return '';
+        }
+
+        function renderTrophyGalleryModal() {
+            return '';
+        }
+
+        function renderScreenshotHint() {
+            return '';
+        }
+
+        function showLoadingScreen(targetScreen) {
+            loadingTargetScreen = targetScreen;
+            loadingMessageIndex = Math.floor(Math.random() * loadingMessages.length);
+            currentScreen = 'loading';
+            render();
+            setTimeout(() => {
+                currentScreen = targetScreen;
+                loadingTargetScreen = null;
+                if (targetScreen !== 'final') platinumChestOpen = false;
+                render();
+                if (targetScreen === 'final') {
+                    confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+                }
+            }, 2300);
+        }
+
+        window.toggleStreamerMode = function() {
+            playUiSound('click');
+            streamerMode = !streamerMode;
+            render();
+        };
+
+        window.toggleScreenshotMode = function() {
+            playUiSound('click');
+            screenshotMode = !screenshotMode;
+            document.body.classList.toggle('screenshot-mode', screenshotMode);
+            render();
+        };
+
+        window.openTrophyGallery = function() {
+            playUiSound('click');
+            trophyGalleryOpen = true;
+            render();
+        };
+
+        window.closeTrophyGallery = function(e) {
+            if (!e || e.target.id === 'trophy-gallery-backdrop' || e.target.closest('button[onclick="closeTrophyGallery()"]')) {
+                trophyGalleryOpen = false;
+                render();
+            }
+        };
+
+
+        function showGodModeToast() {
+            const oldToast = document.getElementById('god-mode-toast');
+            if (oldToast) oldToast.remove();
+
+            const toast = document.createElement('div');
+            toast.id = 'god-mode-toast';
+            toast.className = 'fixed left-1/2 top-6 -translate-x-1/2 z-[9999] rounded-2xl border border-red-400/60 bg-slate-950/90 px-6 py-4 text-center shadow-[0_0_35px_rgba(248,113,113,.35)] backdrop-blur-md animate-zoom-in';
+            toast.innerHTML = `
+                <div class="text-xs font-black uppercase tracking-[.35em] text-red-300">Режим бога активирован</div>
+                <div class="mt-1 text-lg font-black text-white">Я гуль. Все достижения открыты.</div>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2600);
+        }
+
+        function activateGodMode() {
+            playUiSound('god');
+            const hadLockedCards = unlockedMemories.length < memories.length;
+            unlockedMemories = memories.map(memory => memory.id);
+            challengeMemory = null;
+            selectedMemory = null;
+            platinumChestOpen = false;
+            currentImageIndex = 0;
+            if (challengeState.timer) {
+                clearInterval(challengeState.timer);
+                clearTimeout(challengeState.timer);
+            }
+            challengeState = {};
+            currentScreen = 'quest';
+            render();
+            showGodModeToast();
+            confetti({ particleCount: hadLockedCards ? 260 : 120, spread: 140, origin: { y: 0.45 } });
+        }
 
         function stopCardAudio() {
             if (currentAudioPlayer) {
@@ -273,21 +955,715 @@
             }
         }
 
+
+        function renderMiniInventory(mode = 'compact') {
+            const isFinal = mode === 'final';
+            const unlockedCount = unlockedMemories.length;
+            const slots = memories.map(memory => {
+                const unlocked = unlockedMemories.includes(memory.id);
+                const item = inventoryItems[memory.id] || { name: memory.game, emoji: '🎮' };
+                return `
+                    <div id="inventory-slot-${memory.id}" class="trophy-slot ${unlocked ? 'trophy-slot-open border-yellow-300/35' : 'trophy-slot-locked border-slate-700/70 opacity-70'} rounded-2xl border p-3 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                        ${unlocked ? `<div class="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-yellow-200/70 to-transparent"></div>` : ''}
+                        <div class="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl ${unlocked ? 'bg-yellow-300/10 border border-yellow-200/25 shadow-[0_0_22px_rgba(250,204,21,.16)]' : 'bg-slate-950/50 border border-slate-700'} text-3xl ${unlocked ? '' : 'grayscale opacity-55'}">
+                            ${unlocked ? item.emoji : '✦'}
+                        </div>
+                        <div class="text-sm font-black ${unlocked ? memory.textColorClass : 'text-slate-500'} leading-tight">${unlocked ? item.name : 'Слот трофея'}</div>
+                        <div class="mt-1 text-[10px] uppercase tracking-[.16em] ${unlocked ? 'text-slate-400' : 'text-slate-600'} leading-tight">${unlocked ? memory.game : 'закрыто'}</div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="mt-6 trophy-panel rounded-3xl p-5 md:p-6 ${isFinal ? 'text-center' : ''}">
+                    <div class="relative mb-5">
+                        <div class="mx-auto max-w-3xl text-center md:px-28">
+                            <div class="inline-flex items-center gap-2 rounded-full border border-yellow-300/20 bg-yellow-300/10 px-3 py-1 text-[11px] font-black uppercase tracking-[.22em] text-yellow-200/90">
+                                <span>🏆</span> коллекция трофеев
+                            </div>
+                            <h3 class="mt-3 text-2xl font-black text-white ${isFinal ? 'md:text-3xl' : ''}">Панель совместных реликвий</h3>
+                            <p class="mt-1 text-sm text-slate-400">Архив предметов из открытых воспоминаний. Каждый слот — отдельная история.</p>
+                        </div>
+                    </div>
+                    ${unlockedCount === 0 ? `
+                        <div class="mb-4 rounded-2xl border border-slate-700/70 bg-slate-950/45 px-4 py-3 text-sm text-slate-400">
+                            Первый трофей появится здесь после открытия любого достижения.
+                        </div>
+                    ` : ''}
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 ${isFinal ? 'lg:grid-cols-5' : 'lg:grid-cols-10'} gap-3">
+                        ${slots}
+                    </div>
+                </div>
+            `;
+        }
+
+
+        function getChapterMeta(memory) {
+            const index = memories.findIndex(item => item.id === memory.id) + 1;
+            return {
+                chapter: `Глава ${String(index).padStart(2, '0')}`,
+                openLabel: 'воспоминание сохранено',
+                closedLabel: 'пленка не проявлена'
+            };
+        }
+
+
+        function updateSiteMood() {
+            const progress = unlockedMemories.length / memories.length;
+            const stage = progress >= 1 ? 3 : progress >= 0.6 ? 2 : progress >= 0.25 ? 1 : 0;
+            document.body.classList.remove('mood-stage-0', 'mood-stage-1', 'mood-stage-2', 'mood-stage-3');
+            document.body.classList.add('mood-stage-' + stage);
+        }
+
+
+
+        function renderFinalCreditsSection() {
+            return `
+                <div class="mt-6 rounded-3xl border border-cyan-400/30 bg-slate-950/65 p-6 text-center shadow-[0_0_28px_rgba(34,211,238,.12)]">
+                    <h3 class="text-2xl md:text-3xl font-black text-white mb-3">Титры кооп-прохождения</h3>
+                    <p class="text-slate-400 mb-5">Короткие финальные титры для всех, кто делал этот год смешнее, теплее и хаотичнее.</p>
+                    <button onclick="openCredits()" class="inline-flex items-center justify-center gap-3 rounded-2xl border border-cyan-300/40 bg-gradient-to-r from-cyan-700/70 to-fuchsia-700/70 px-7 py-4 font-black text-white uppercase tracking-widest shadow-[0_0_24px_rgba(34,211,238,.20)] transition-all hover:scale-105 active:scale-95">
+                        <i data-lucide="film" class="w-5 h-5"></i>
+                        Посмотреть титры
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderCreditsModal() {
+            const rows = creditLines.map(([role, name], index) => `
+                <div class="credits-line rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4 text-left" style="animation-delay:${index * 70}ms">
+                    <div class="text-[11px] font-black uppercase tracking-[.25em] text-slate-500">${role}</div>
+                    <div class="mt-1 text-lg md:text-xl font-black text-white">${name}</div>
+                </div>
+            `).join('');
+            return `
+                <div id="credits-backdrop" onclick="closeCredits(event)" class="credits-backdrop fixed inset-0 z-[70] flex items-center justify-center p-4 md:p-8 backdrop-blur-md animate-fade-in">
+                    <div class="max-w-3xl w-full max-h-[95vh] overflow-y-auto rounded-3xl border border-cyan-300/40 bg-slate-900/95 shadow-[0_0_60px_rgba(34,211,238,.20)] animate-zoom-in" onclick="event.stopPropagation()">
+                        <div class="sticky top-0 z-20 flex items-center gap-4 border-b border-cyan-300/20 bg-slate-950/90 p-4 backdrop-blur-md">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/40 bg-cyan-400/10 text-2xl">🎬</div>
+                            <div>
+                                <div class="text-xs font-black uppercase tracking-[.3em] text-cyan-300/80">credits unlocked</div>
+                                <h3 class="text-2xl md:text-3xl font-black text-white">Титры после финала</h3>
+                            </div>
+                            <button onclick="closeCredits()" class="ml-auto rounded-full border border-white/10 bg-black/40 p-2 hover:bg-slate-700"><i data-lucide="x" class="w-6 h-6"></i></button>
+                        </div>
+                        <div class="p-6 md:p-8">
+                            <div class="mb-8 text-center">
+                                <div class="text-5xl mb-4">🏆</div>
+                                <p class="text-lg text-slate-300 leading-relaxed">Кооп-сессия завершена успешно. Все боссы прошлого года побеждены, все мемы сохранены, напарник остается в пати.</p>
+                            </div>
+                            <div class="grid gap-3">${rows}</div>
+                            <div class="mt-8 rounded-3xl border border-yellow-300/30 bg-yellow-300/10 p-5 text-center">
+                                <div class="text-sm font-black uppercase tracking-[.25em] text-yellow-200">Продолжение следует</div>
+                                <div class="mt-2 text-2xl font-black text-white">DLC «Следующий год коопа» уже установлено</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.openCredits = function() {
+            playUiSound('success');
+            creditsOpen = true;
+            render();
+        };
+
+        window.closeCredits = function(e) {
+            if (!e || e.target.id === 'credits-backdrop' || e.target.closest('button[onclick="closeCredits()"]')) {
+                creditsOpen = false;
+                render();
+            }
+        };
+
+        function renderPlatinumChestSection() {
+            return `
+                <div class="rounded-[2rem] border border-yellow-300/35 bg-gradient-to-br from-yellow-300/12 via-slate-950/70 to-slate-900/70 p-6 text-center shadow-[0_0_45px_rgba(250,204,21,.14)] relative overflow-hidden">
+                    <div class="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-yellow-200/70 to-transparent"></div>
+                    <div class="text-xs font-black uppercase tracking-[.35em] text-yellow-200/85 mb-2">последняя награда альбома</div>
+                    <h3 class="text-2xl md:text-4xl font-black text-white mb-3">Сундук платинового трофея</h3>
+                    <p class="text-slate-400 mb-6">Когда он откроется, появится коллекционная карточка игрока.</p>
+                    <button onclick="openPlatinumChest()" class="platinum-chest-card group relative w-full max-w-md mx-auto rounded-[2rem] border border-yellow-200/55 bg-gradient-to-br from-amber-800/55 via-yellow-900/30 to-slate-950 p-7 hover:scale-[1.02] active:scale-[.98] transition-all overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                        <div class="relative mx-auto w-40 h-32 mb-5">
+                            <div class="chest-lid absolute left-3 right-3 top-2 h-12 rounded-t-3xl bg-gradient-to-r from-yellow-800 via-amber-400 to-yellow-700 border border-yellow-100/70 shadow-lg"></div>
+                            <div class="absolute left-0 right-0 bottom-0 h-24 rounded-3xl bg-gradient-to-br from-amber-700 via-yellow-800 to-slate-950 border border-yellow-100/60 shadow-2xl flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-2xl bg-slate-950/70 border border-yellow-100/60 flex items-center justify-center text-4xl shadow-[0_0_25px_rgba(250,204,21,.22)]">👑</div>
+                            </div>
+                        </div>
+                        <span class="relative inline-flex items-center justify-center gap-2 text-yellow-50 font-black uppercase tracking-widest">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i> Открыть коллекционную карточку
+                        </span>
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderPlayerPassportModal() {
+            const titleCards = memories.map(memory => {
+                const title = playerTitles[memory.id];
+                const item = inventoryItems[memory.id];
+                return `
+                    <div class="title-medal rounded-2xl p-4 text-left">
+                        <div class="flex items-start gap-3">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-yellow-200/20 bg-slate-950/55 text-2xl">${item.emoji}</div>
+                            <div>
+                                <div class="text-sm font-black ${memory.textColorClass}">${title.title}</div>
+                                <div class="text-xs text-slate-400 mt-1 leading-relaxed">${title.tag}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div id="passport-backdrop" onclick="closePlatinumChest(event)" class="fixed inset-0 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4 md:p-8 z-[60] animate-fade-in">
+                    <div class="platinum-chest-open max-w-6xl w-full max-h-[95vh] overflow-y-auto rounded-[2rem] border border-yellow-300/45 bg-slate-950 shadow-[0_0_80px_rgba(250,204,21,.18)] animate-zoom-in" onclick="event.stopPropagation()">
+                        <div class="sticky top-0 z-20 flex items-center gap-4 border-b border-yellow-300/25 bg-slate-950/92 p-4 backdrop-blur-md">
+                            <div class="relative w-16 h-14 shrink-0">
+                                <div class="chest-lid absolute left-1 right-1 top-0 h-6 rounded-t-xl bg-gradient-to-r from-yellow-800 to-amber-300 border border-yellow-100/60"></div>
+                                <div class="absolute left-0 right-0 bottom-0 h-10 rounded-xl bg-gradient-to-br from-amber-700 to-slate-900 border border-yellow-100/60 flex items-center justify-center">👑</div>
+                            </div>
+                            <div>
+                                <div class="text-xs uppercase tracking-[.3em] text-yellow-200/80 font-black">platinum memory card</div>
+                                <h3 class="text-2xl md:text-3xl font-black text-white">Коллекционная карточка игрока</h3>
+                            </div>
+                            <button onclick="closePlatinumChest()" class="ml-auto bg-black/40 p-2 rounded-full hover:bg-slate-700 border border-white/10"><i data-lucide="x" class="w-6 h-6"></i></button>
+                        </div>
+
+                        <div class="p-5 md:p-8 passport-reveal">
+                            <div class="passport-gold-card rounded-[2rem] p-6 md:p-8 mb-6">
+                                <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-6 items-stretch">
+                                    <div class="rounded-[1.5rem] border border-yellow-200/25 bg-slate-950/55 p-6 text-left flex flex-col justify-between">
+                                        <div>
+                                            <div class="flex items-center justify-between gap-4 mb-7">
+                                                <div>
+                                                    <div class="text-xs uppercase tracking-[.3em] text-yellow-200/70 font-black">Player ID Ghoul_743098</div>
+                                                    <div class="text-5xl md:text-6xl font-black text-white mt-2">Chich_Play</div>
+                                                </div>
+                                                <div class="w-24 h-24 rounded-[1.5rem] bg-yellow-300/10 border border-yellow-200/40 flex items-center justify-center text-6xl shadow-[0_0_35px_rgba(250,204,21,.18)]">👑</div>
+                                            </div>
+                                            <div class="space-y-3">
+                                                <div class="rounded-2xl bg-slate-950/70 border border-yellow-200/15 p-4">
+                                                    <div class="text-xs uppercase tracking-widest text-slate-500 font-black">Класс</div>
+                                                    <div class="text-2xl font-black text-yellow-100">Легендарный тиммейт</div>
+                                                </div>
+                                                <div class="rounded-2xl bg-slate-950/70 border border-yellow-200/15 p-4">
+                                                    <div class="text-xs uppercase tracking-widest text-slate-500 font-black">Редкость</div>
+                                                    <div class="text-2xl font-black text-yellow-300">Mythic Platinum</div>
+                                                </div>
+                                                <div class="rounded-2xl bg-slate-950/70 border border-yellow-200/15 p-4">
+                                                    <div class="text-xs uppercase tracking-widest text-slate-500 font-black">Статус</div>
+                                                    <div class="text-2xl font-black text-emerald-300">Готова к новому DLC жизни</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-[1.5rem] border border-white/10 bg-slate-950/60 p-6 text-left">
+                                        <div class="flex items-center gap-3 mb-5">
+                                            <i data-lucide="award" class="w-8 h-8 text-yellow-300"></i>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-[.3em] text-slate-400 font-black">Коллекция титулов прохождения</div>
+                                                <h4 class="text-3xl font-black text-white">10/10 титулов получено</h4>
+                                            </div>
+                                        </div>
+                                        <div class="grid sm:grid-cols-2 gap-3">
+                                            ${titleCards}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rounded-3xl border border-cyan-300/20 bg-cyan-300/8 p-5 text-center">
+                                <div class="text-xs uppercase tracking-[.28em] text-cyan-200/80 font-black mb-3">основные скиллы</div>
+                                <div class="flex flex-wrap justify-center gap-2">
+                                    ${['Кооп', 'Терпение', 'Смех', 'Хаос', 'Скриншоты', 'Упрямство'].map(skill => `<span class="px-4 py-2 rounded-full bg-slate-900 border border-cyan-300/25 text-cyan-100 text-sm font-bold">${skill}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getChallengeCopy(memory) {
+            const copy = {
+                1: { title: 'Почини генератор', subtitle: 'Нажми ПРОБЕЛ или кнопку ровно в зеленой зоне, как в Dead by Daylight.' },
+                2: { title: 'Собери пазл побега', subtitle: 'Найди на локации три спрятанных кусочка пазла и кликни по ним.' },
+                3: { title: 'Не дай костру погаснуть', subtitle: 'Подкинь 5 поленьев, пока тьма не добралась до базы.' },
+                4: { title: 'Идеальный скриншот Тамриэля', subtitle: 'Поймай кадр, когда медведь попал в рамку, а напарник еще жив.' },
+                5: { title: 'Рация We Were Here', subtitle: 'Повтори команды напарника без ошибки.' },
+                6: { title: 'Мимик слушает', subtitle: 'Выбери настоящую фразу команды, а не подделку.' },
+                7: { title: 'Тихий побег', subtitle: 'Спрячьтесь от чудовища и досчитай до безопасного момента.' },
+                8: { title: 'Кооп-синхронизация', subtitle: 'Нажми обе кнопки дружбы достаточно быстро.' },
+                9: { title: 'Пометь гидрант', subtitle: 'Зажми кнопку и не отпускай, пока шкала метки не заполнится до конца.' },
+                10:{ title: 'Босс 30 уровня', subtitle: 'Закликай босса до победы. Утки не отступают.' }
+            };
+            return copy[memory.id] || { title: 'Испытание', subtitle: 'Выполни мини-задание, чтобы открыть достижение.' };
+        }
+
+        function challengeProgressText() {
+            if (!challengeMemory) return '';
+            const s = challengeState;
+            switch (challengeMemory.id) {
+                case 1: return s.message || 'Попади в зеленую зону';
+                case 2: return (s.message ? s.message + ' · ' : '') + 'Кусочки пазла: ' + Object.keys(s.puzzleFound || {}).length + '/3';
+                case 3: return 'Огонь: ' + Math.max(0, s.fire || 0) + '% · Поленья: ' + (s.logs || 0) + '/5';
+                case 4: return 'Кадр: ' + (s.photoReady ? 'идеальный ракурс!' : 'жди медведя в рамке');
+                case 5: return 'Команды: ' + (s.sequence ? s.sequence.slice(0, s.step || 0).join(' ') : '') + ' _';
+                case 6: return s.message || 'Кто настоящий тиммейт?';
+                case 7: return 'Тишина: ' + (s.hide || 0) + '/4';
+                case 8: return 'Синхронность: ' + (s.sync || 0) + '/2';
+                case 9: return (s.message ? s.message + ' · ' : '') + 'Гидрант: ' + Math.min(100, s.hydrant || 0) + '%';
+                case 10:return 'HP босса: ' + Math.max(0, s.boss || 0) + '%';
+                default: return '';
+            }
+        }
+
+        function renderChallengeBody(memory) {
+            const s = challengeState;
+            if (memory.id === 1) {
+                return `
+                    <div class="relative mx-auto my-4 w-56 h-56 rounded-full border-[14px] border-slate-700 bg-slate-950 shadow-[0_0_40px_rgba(239,68,68,.25)]">
+                        <div class="dbd-skillcheck-zone"></div>
+                        <div class="dbd-skillcheck-pointer"></div>
+                        <div class="absolute inset-12 rounded-full border border-red-500/40 flex items-center justify-center text-red-300 font-black challenge-glitch">SPACE</div>
+                    </div>
+                    <button onclick="dbdSkillCheck(event)" class="w-full py-4 bg-red-600 hover:bg-red-500 rounded-xl font-black uppercase tracking-widest shadow-[0_0_25px_rgba(239,68,68,.35)]">Скилчек!</button>
+                `;
+            }
+            if (memory.id === 2) {
+                const found = s.puzzleFound || {};
+                const pieces = s.puzzlePieces || [
+                    { top: 14, left: 18, rot: -18 },
+                    { top: 48, left: 72, rot: 14 },
+                    { top: 70, left: 33, rot: -6 }
+                ];
+                const clutter = [
+                    { emoji:'☕', top: 24, left: 48 }, { emoji:'🌍', top: 56, left: 12 }, { emoji:'📚', top: 18, left: 76 },
+                    { emoji:'🏺', top: 66, left: 84 }, { emoji:'🔑', top: 78, left: 60 }, { emoji:'🧦', top: 40, left: 33 },
+                    { emoji:'🕯️', top: 10, left: 58 }, { emoji:'🧭', top: 58, left: 48 }
+                ];
+                return `
+                    <div class="relative my-5 h-72 bg-[radial-gradient(circle_at_top,rgba(245,158,11,.18),transparent_45%),linear-gradient(135deg,rgba(15,23,42,.95),rgba(69,26,3,.45))] rounded-2xl border border-amber-400/30 overflow-hidden shadow-inner">
+                        <div class="absolute left-4 top-4 text-xs uppercase tracking-[.3em] text-amber-200/70">Комната побега</div>
+                        <div class="absolute inset-x-5 bottom-5 h-20 rounded-xl bg-amber-950/30 border border-amber-700/30"></div>
+                        ${clutter.map((item, idx) => `<button onclick="escapeClutter(event)" class="escape-room-clutter absolute w-12 h-12 rounded-xl bg-slate-950/65 border border-amber-400/20 text-3xl flex items-center justify-center hover:border-amber-300/70" style="top:${item.top}%; left:${item.left}%;">${item.emoji}</button>`).join('')}
+                        ${pieces.map((piece, idx) => `<button onclick="escapePuzzlePiece(${idx}, event)" class="escape-room-clutter absolute w-14 h-14 rounded-xl ${found[idx] ? 'puzzle-piece-found bg-emerald-500/20' : 'bg-amber-400/15'} border border-amber-300/70 text-4xl flex items-center justify-center hover:bg-amber-400/25" style="top:${piece.top}%; left:${piece.left}%; transform: rotate(${piece.rot}deg);" ${found[idx] ? 'disabled' : ''}>🧩</button>`).join('')}
+                    </div>
+                    <p class="text-center text-slate-400 text-sm">Подсказка: кусочки пазла выглядят как 🧩, но спрятаны среди хлама.</p>
+                `;
+            }
+            if (memory.id === 3) {
+                return `
+                    <div class="my-5 bg-slate-950 rounded-2xl border border-orange-500/30 p-5 text-center">
+                        <div class="text-7xl mb-3" style="animation: dangerPulse 1s infinite">🔥</div>
+                        <div class="h-5 bg-slate-800 rounded-full overflow-hidden border border-slate-700"><div class="h-full bg-gradient-to-r from-red-600 to-orange-400 transition-all" style="width:${Math.max(0, s.fire || 0)}%"></div></div>
+                    </div>
+                    <button onclick="feedFire()" class="w-full py-4 bg-orange-600 hover:bg-orange-500 rounded-xl font-black">Подкинуть полено</button>
+                `;
+            }
+            if (memory.id === 4) {
+                return `
+                    <div class="relative my-5 h-56 bg-gradient-to-b from-yellow-900/30 to-slate-950 rounded-2xl border border-yellow-500/30 overflow-hidden">
+                        <div class="absolute inset-8 border-4 border-yellow-300/70 rounded-xl shadow-[0_0_30px_rgba(250,204,21,.25)]"></div>
+                        <div id="eso-bear" class="absolute top-24 text-5xl transition-all duration-300" style="left:${s.bear || 8}%">🐻</div>
+                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-5xl">🛡️</div>
+                    </div>
+                    <button onclick="takeEsoPhoto()" class="w-full py-4 bg-yellow-600 hover:bg-yellow-500 rounded-xl font-black">Сфоткаемся!</button>
+                `;
+            }
+            if (memory.id === 5) {
+                return `
+                    <div class="my-5 bg-cyan-950/40 rounded-2xl border border-cyan-400/30 p-5 text-center">
+                        <div class="text-xs uppercase tracking-[.35em] text-cyan-300 mb-3">Рация шипит</div>
+                        <div class="text-2xl font-black text-white">${(s.sequence || []).join(' · ')}</div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${['ЛЕВО','ПРАВО','ВВЕРХ','ВНИЗ'].map(cmd => `<button onclick="radioCommand('${cmd}')" class="challenge-tile bg-cyan-500/10 border border-cyan-400/40 rounded-xl p-4 font-black hover:bg-cyan-500/20">${cmd}</button>`).join('')}
+                    </div>
+                `;
+            }
+            if (memory.id === 6) {
+                return `
+                    <div class="grid gap-3 my-5">
+                        ${['Туалетная бумага...','Это ты? Пойду полутаю','Я настоящий, открывай дверь','Мимик не умеет говорить'].map((phrase, idx) => `<button onclick="mimesisPick(${idx})" class="challenge-tile bg-lime-500/10 border border-lime-400/40 rounded-xl p-4 text-left font-bold hover:bg-lime-500/20">🎙️ ${phrase}</button>`).join('')}
+                    </div>
+                `;
+            }
+            if (memory.id === 7) {
+                return `
+                    <div class="my-5 bg-indigo-950/50 rounded-2xl border border-indigo-400/30 p-5 text-center overflow-hidden">
+                        <div class="text-7xl mb-2 ${s.hide >= 4 ? '' : 'animate-pulse'}">${s.hide >= 4 ? '🚤' : '👹'}</div>
+                        <div class="h-4 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-indigo-400 transition-all" style="width:${((s.hide || 0)/4)*100}%"></div></div>
+                    </div>
+                    <button onmousedown="holdHideStart()" onmouseup="holdHideEnd()" ontouchstart="holdHideStart()" ontouchend="holdHideEnd()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-black">Зажми: не дышать</button>
+                `;
+            }
+            if (memory.id === 8) {
+                return `
+                    <div class="grid grid-cols-2 gap-4 my-5">
+                        <button onclick="syncButton('cody')" class="challenge-tile bg-pink-500/10 border ${s.cody ? 'border-emerald-400' : 'border-pink-400/40'} rounded-xl p-6 font-black">Коди 🔨</button>
+                        <button onclick="syncButton('may')" class="challenge-tile bg-pink-500/10 border ${s.may ? 'border-emerald-400' : 'border-pink-400/40'} rounded-xl p-6 font-black">Мэй 🧶</button>
+                    </div>
+                    <p class="text-center text-slate-400 text-sm">Нужно нажать обе за 1.5 секунды.</p>
+                `;
+            }
+            if (memory.id === 9) {
+                return `
+                    <div class="my-5 bg-purple-950/40 rounded-2xl border border-purple-400/30 p-5 text-center overflow-hidden">
+                        <div class="text-7xl mb-3">🚰🐶</div>
+                        <div class="h-6 bg-slate-800 rounded-full overflow-hidden border border-slate-700 shadow-inner">
+                            <div id="hydrant-fill" class="h-full bg-gradient-to-r from-yellow-300 to-purple-400 transition-all duration-100" style="width:${Math.min(100, s.hydrant || 0)}%"></div>
+                        </div>
+                        <p id="hydrant-label" class="mt-3 text-sm text-slate-300 font-mono">${Math.min(100, s.hydrant || 0)}%</p>
+                    </div>
+                    <button onpointerdown="hydrantHoldStart(event)" onpointerup="hydrantHoldEnd(event)" onpointerleave="hydrantHoldEnd(event)" onpointercancel="hydrantHoldEnd(event)" class="hydrant-button w-full py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-black shadow-[0_0_25px_rgba(168,85,247,.3)]">Зажать: пометить гидрант</button>
+                `;
+            }
+            return `
+                <div class="my-5 bg-teal-950/40 rounded-2xl border border-teal-400/30 p-5 text-center">
+                    <div class="text-6xl mb-3">🦆⚔️</div>
+                    <div class="h-5 bg-slate-800 rounded-full overflow-hidden border border-slate-700"><div class="h-full bg-gradient-to-r from-teal-400 to-emerald-400 transition-all" style="width:${Math.max(0, s.boss || 100)}%"></div></div>
+                </div>
+                <button onclick="hitBoss()" class="w-full py-4 bg-teal-600 hover:bg-teal-500 rounded-xl font-black">Ударить палкой!</button>
+            `;
+        }
+
+        function getChallengeModalHtml() {
+            if (!challengeMemory) return '';
+            const copy = getChallengeCopy(challengeMemory);
+            return `
+                <div id="challenge-backdrop" onclick="closeChallenge(event)" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in">
+                    <div class="bg-slate-900 border-2 ${challengeMemory.colorClass} rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl animate-zoom-in" onclick="event.stopPropagation()">
+                        <div class="p-6 border-b border-white/10 bg-slate-950/50 flex items-center gap-4">
+                            <div class="p-3 rounded-xl bg-black/40 border border-white/10"><i data-lucide="${challengeMemory.icon}" class="w-8 h-8 ${challengeMemory.textColorClass}"></i></div>
+                            <div>
+                                <div class="text-xs font-black uppercase tracking-[.25em] text-slate-400">Испытание разблокировки</div>
+                                <h3 class="text-2xl font-black ${challengeMemory.textColorClass}">${copy.title}</h3>
+                            </div>
+                            <button onclick="closeChallenge()" class="ml-auto bg-black/40 p-2 rounded-full hover:bg-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-slate-300 mb-4">${copy.subtitle}</p>
+                            <div id="challenge-progress" class="mb-4 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 font-mono text-sm text-emerald-300">${challengeProgressText()}</div>
+                            <div id="challenge-body">${renderChallengeBody(challengeMemory)}</div>
+                            <button onclick="restartChallenge()" class="mt-4 w-full py-2 text-sm text-slate-400 hover:text-white">Начать испытание заново</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateChallengeProgressOnly() {
+            const progress = document.getElementById('challenge-progress');
+            if (progress) progress.innerHTML = challengeProgressText();
+        }
+
+        function updateChallengeUI() {
+            const progress = document.getElementById('challenge-progress');
+            const body = document.getElementById('challenge-body');
+            if (!challengeMemory || !progress || !body) {
+                render();
+                return;
+            }
+            progress.innerHTML = challengeProgressText();
+            body.innerHTML = renderChallengeBody(challengeMemory);
+            updateSiteMood();
+            lucide.createIcons();
+            updatePingStatus();
+        }
+
+        function shufflePuzzlePieces() {
+            const spots = [
+                { top: 14, left: 18, rot: -18 }, { top: 48, left: 72, rot: 14 }, { top: 70, left: 33, rot: -6 },
+                { top: 22, left: 61, rot: 9 }, { top: 60, left: 22, rot: -12 }, { top: 36, left: 84, rot: 20 }
+            ];
+            return spots.sort(() => Math.random() - 0.5).slice(0, 3);
+        }
+
+        function createChallengeState(id, message = '') {
+            const sequences = [['ЛЕВО','ПРАВО','ВВЕРХ'], ['ВНИЗ','ЛЕВО','ПРАВО'], ['ВВЕРХ','ВВЕРХ','ЛЕВО']];
+            const state = { sequence: [], step: 0, message, fire: 65, logs: 0, bear: 8, photoReady: false, hide: 0, sync: 0, paws: 0, boss: 100, puzzleFound: {}, puzzlePieces: [], hydrant: 0 };
+            if (id === 5) state.sequence = sequences[Math.floor(Math.random() * sequences.length)];
+            if (id === 2) state.puzzlePieces = shufflePuzzlePieces();
+            return state;
+        }
+
+        function startChallenge(id) {
+            challengeMemory = memories.find(m => m.id === id);
+            challengeState = createChallengeState(id);
+            render();
+            startChallengeLoops();
+        }
+
+        function startChallengeLoops() {
+            if (!challengeMemory) return;
+            if (challengeMemory.id === 3) {
+                clearInterval(challengeState.timer);
+                challengeState.timer = setInterval(() => {
+                    if (!challengeMemory || challengeMemory.id !== 3) return clearInterval(challengeState.timer);
+                    challengeState.fire = Math.max(0, (challengeState.fire || 0) - 7);
+                    if (challengeState.fire <= 0) restartChallenge('Костер погас. Еще раз!');
+                    else updateChallengeUI();
+                }, 900);
+            }
+            if (challengeMemory.id === 4) {
+                clearInterval(challengeState.timer);
+                challengeState.timer = setInterval(() => {
+                    if (!challengeMemory || challengeMemory.id !== 4) return clearInterval(challengeState.timer);
+                    challengeState.bear = 8 + Math.floor(Math.random() * 78);
+                    challengeState.photoReady = challengeState.bear > 37 && challengeState.bear < 63;
+                    updateChallengeUI();
+                }, 700);
+            }
+        }
+
+        function finishChallenge() {
+            playUiSound('success');
+            if (!challengeMemory) return;
+            const id = challengeMemory.id;
+            const memory = challengeMemory;
+            if (challengeState.timer) clearInterval(challengeState.timer);
+            if (challengeState.timer) clearTimeout(challengeState.timer);
+            challengeMemory = null;
+            const wasNew = !unlockedMemories.includes(id);
+            if (wasNew) unlockedMemories.push(id);
+            selectedMemory = null;
+            currentImageIndex = 0;
+            confetti({ particleCount: 120, spread: 90, origin: { y: 0.65 } });
+            render();
+            setTimeout(() => {
+                selectedMemory = memory;
+                currentImageIndex = 0;
+                render();
+            }, 0);
+        }
+
+        function restartChallenge(message) {
+            playUiSound('fail');
+            if (!challengeMemory) return;
+            const id = challengeMemory.id;
+            if (challengeState.timer) clearInterval(challengeState.timer);
+            if (challengeState.timer) clearTimeout(challengeState.timer);
+            challengeState = createChallengeState(id, message || '');
+            updateChallengeUI();
+            startChallengeLoops();
+        }
+
+        window.closeChallenge = function(e) {
+            if (!e || e.target.id === 'challenge-backdrop' || e.target.closest('button[onclick="closeChallenge()"]')) {
+                if (challengeState.timer) clearInterval(challengeState.timer);
+                challengeMemory = null;
+                render();
+            }
+        };
+
+        window.dbdSkillCheck = function(e) {
+            if (e) e.stopPropagation();
+            const pointer = document.querySelector('.dbd-skillcheck-pointer');
+            if (!pointer) return;
+            const matrix = getComputedStyle(pointer).transform;
+            let angle = 0;
+            if (matrix && matrix !== 'none') {
+                const values = matrix.split('(')[1].split(')')[0].split(',');
+                const a = parseFloat(values[0]);
+                const b = parseFloat(values[1]);
+                angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+                if (angle < 0) angle += 360;
+            }
+            if (angle >= 30 && angle <= 62) finishChallenge();
+            else { playUiSound('fail'); challengeState.message = 'Мимо! Маньяк услышал взрыв генератора.'; updateChallengeProgressOnly(); }
+        };
+
+        window.escapePuzzlePiece = function(index, e) {
+            if (e) e.stopPropagation();
+            challengeState.puzzleFound = challengeState.puzzleFound || {};
+            if (challengeState.puzzleFound[index]) return;
+            challengeState.puzzleFound[index] = true;
+            playUiSound('unlock');
+            challengeState.message = 'Кусочек найден!';
+            if (e && e.currentTarget) {
+                e.currentTarget.classList.add('puzzle-piece-found', 'bg-emerald-500/20');
+                e.currentTarget.disabled = true;
+            }
+            const foundCount = Object.keys(challengeState.puzzleFound).length;
+            if (foundCount >= 3) return finishChallenge();
+            updateChallengeProgressOnly();
+        };
+
+        window.escapeClutter = function(e) {
+            if (e) e.stopPropagation();
+            playUiSound('fail');
+            challengeState.message = 'Тут просто хлам. Ищи кусочки пазла 🧩';
+            updateChallengeProgressOnly();
+        };
+
+        window.feedFire = function() {
+            playUiSound('click');
+            challengeState.logs = (challengeState.logs || 0) + 1;
+            challengeState.fire = Math.min(100, (challengeState.fire || 0) + 18);
+            if (challengeState.logs >= 5) finishChallenge(); else updateChallengeUI();
+        };
+
+        window.takeEsoPhoto = function() {
+            if (challengeState.photoReady) finishChallenge();
+            else { playUiSound('fail'); challengeState.message = 'Ракурс плохой: медведь не в кадре.'; updateChallengeProgressOnly(); startChallengeLoops(); }
+        };
+
+        window.radioCommand = function(cmd) {
+            const sequence = challengeState.sequence || [];
+            playUiSound('click');
+            if (cmd !== sequence[challengeState.step]) return restartChallenge('Рация зашипела. Лево опять стало право.');
+            challengeState.step += 1;
+            if (challengeState.step >= sequence.length) finishChallenge(); else updateChallengeUI();
+        };
+
+        window.mimesisPick = function(idx) {
+            if (idx === 1) finishChallenge();
+            else { playUiSound('fail'); challengeState.message = 'Это был мимик. Он украл весь лут.'; updateChallengeProgressOnly(); }
+        };
+
+        window.holdHideStart = function() {
+            playUiSound('click');
+            clearInterval(challengeState.timer);
+            challengeState.timer = setInterval(() => {
+                if (!challengeMemory || challengeMemory.id !== 7) return clearInterval(challengeState.timer);
+                challengeState.hide = (challengeState.hide || 0) + 1;
+                if (challengeState.hide >= 4) { clearInterval(challengeState.timer); finishChallenge(); }
+                else updateChallengeUI();
+            }, 650);
+        };
+
+        window.holdHideEnd = function() {
+            if (challengeMemory && challengeMemory.id === 7 && (challengeState.hide || 0) < 4) {
+                clearInterval(challengeState.timer);
+                playUiSound('fail');
+                challengeState.hide = 0;
+                challengeState.message = 'Чудовище услышало. Зажми дольше.';
+                updateChallengeUI();
+            }
+        };
+
+        window.syncButton = function(name) {
+            playUiSound('click');
+            challengeState[name] = true;
+            challengeState.sync = (challengeState.cody ? 1 : 0) + (challengeState.may ? 1 : 0);
+            clearTimeout(challengeState.timer);
+            if (challengeState.sync >= 2) return finishChallenge();
+            challengeState.timer = setTimeout(() => {
+                if (challengeMemory && challengeMemory.id === 8) {
+                    playUiSound('fail'); challengeState.cody = false; challengeState.may = false; challengeState.sync = 0; challengeState.message = 'Слишком медленно. Кооп развалился.'; updateChallengeUI();
+                }
+            }, 1500);
+            updateChallengeUI();
+        };
+
+        function updateHydrantUi() {
+            const fill = document.getElementById('hydrant-fill');
+            const label = document.getElementById('hydrant-label');
+            const value = Math.min(100, challengeState.hydrant || 0);
+            if (fill) fill.style.width = value + '%';
+            if (label) label.textContent = value + '%';
+            updateChallengeProgressOnly();
+        }
+
+        window.hydrantHoldStart = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (!challengeMemory || challengeMemory.id !== 9) return;
+            clearInterval(challengeState.timer);
+            playUiSound('click');
+            challengeState.message = 'Держи кнопку!';
+            challengeState.timer = setInterval(() => {
+                if (!challengeMemory || challengeMemory.id !== 9) return clearInterval(challengeState.timer);
+                challengeState.hydrant = Math.min(100, (challengeState.hydrant || 0) + 5);
+                if (challengeState.hydrant >= 100) {
+                    clearInterval(challengeState.timer);
+                    return finishChallenge();
+                }
+                updateHydrantUi();
+            }, 90);
+            updateHydrantUi();
+        };
+
+        window.hydrantHoldEnd = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (!challengeMemory || challengeMemory.id !== 9) return;
+            clearInterval(challengeState.timer);
+            if ((challengeState.hydrant || 0) < 100) {
+                playUiSound('fail');
+                challengeState.hydrant = 0;
+                challengeState.message = 'Рано отпустила. Гидрант снова чистый.';
+                updateHydrantUi();
+            }
+        };
+
+        window.hitBoss = function() {
+            playUiSound('click');
+            challengeState.boss = Math.max(0, (challengeState.boss || 100) - (10 + Math.floor(Math.random() * 8)));
+            if (challengeState.boss <= 0) finishChallenge(); else updateChallengeUI();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            const activeTag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
+            const isTypingField = activeTag === 'input' || activeTag === 'textarea' || document.activeElement?.isContentEditable;
+
+            if (e.key === 'Escape') {
+                if (screenshotMode) { screenshotMode = false; document.body.classList.remove('screenshot-mode'); render(); return; }
+                if (trophyGalleryOpen) { trophyGalleryOpen = false; render(); return; }
+            }
+
+            if (!isTypingField && e.key && e.key.length === 1) {
+                godModeBuffer = (godModeBuffer + e.key.toLowerCase()).slice(-GOD_MODE_CODE.length);
+                if (godModeBuffer === GOD_MODE_CODE) {
+                    e.preventDefault();
+                    godModeBuffer = '';
+                    activateGodMode();
+                    return;
+                }
+            }
+
+            if (challengeMemory && challengeMemory.id === 1 && (e.code === 'Space' || e.key === ' ')) {
+                e.preventDefault();
+                dbdSkillCheck(e);
+            }
+        });
+
         function render() {
             const app = document.getElementById('app');
             let html = '';
 
+            if (currentScreen === 'loading') {
+                const msg = loadingMessages[loadingMessageIndex % loadingMessages.length];
+                html = `
+                    <div class="max-w-lg w-full bg-slate-900/90 backdrop-blur-md border border-cyan-400/30 rounded-3xl p-8 text-center shadow-[0_0_45px_rgba(34,211,238,.18)] animate-zoom-in overflow-hidden relative">
+                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-yellow-300"></div>
+                        <div class="text-xs font-black uppercase tracking-[.35em] text-cyan-300/80 mb-4">loading checkpoint</div>
+                        <div class="mx-auto mb-6 w-20 h-20 rounded-3xl border border-cyan-300/40 bg-slate-950/70 flex items-center justify-center shadow-[0_0_28px_rgba(34,211,238,.18)]">
+                            <i data-lucide="loader-circle" class="w-10 h-10 text-cyan-300 animate-spin"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-black text-white mb-3">${msg}</h2>
+                        <p class="text-slate-400 mb-6">Переход между этапами кооп-приключения.</p>
+                        <div class="loading-scan relative h-4 rounded-full bg-slate-950 border border-slate-700 overflow-hidden">
+                            <div class="h-full w-3/4 rounded-full bg-gradient-to-r from-fuchsia-600 to-cyan-400"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            else
             // ЭКРАН 1: Приветствие
             if (currentScreen === 'intro') {
                 html = `
-                    <div class="max-w-md w-full bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-xl p-8 text-center shadow-2xl animate-zoom-in relative overflow-hidden">
+                    <div class="max-w-md w-full bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-3xl p-8 text-center shadow-2xl animate-zoom-in relative overflow-hidden glass-glow pulse-glow">
                         <!-- Декоративные игровые элементы по углам -->
                         <div class="absolute top-2 left-2 text-slate-700/50"><i data-lucide="wifi" class="w-5 h-5"></i></div>
-                        <div class="absolute top-2 right-2 text-emerald-500 font-mono text-xs font-bold tracking-widest">PING: 300ms</div>
+                        <div id="ping-status" class="absolute top-2 right-2 text-emerald-500 font-mono text-xs font-bold tracking-widest ping-live">PING: 300ms</div>
                         
                         <div class="flex justify-center mb-6 relative mt-4">
                             <div class="absolute inset-0 bg-fuchsia-500 blur-2xl opacity-20 rounded-full animate-pulse"></div>
-                            <i data-lucide="users" class="w-20 h-20 text-fuchsia-400 relative z-10 animate-bounce"></i>
+                            <i data-lucide="users" onclick="secretAchievement()" class="w-20 h-20 text-fuchsia-400 relative z-10 animate-bounce cursor-pointer hover:scale-110 transition-transform"></i>
                         </div>
                         <h1 class="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400">
                             Кооперативное лобби
@@ -309,66 +1685,69 @@
                 let cardsHtml = memories.map(memory => {
                     const isUnlocked = unlockedMemories.includes(memory.id);
                     const gridPosClass = memory.id === 10 ? "lg:col-start-2" : "";
-                    const baseClasses = `relative p-6 rounded-xl border-2 text-left transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer group ${gridPosClass} backdrop-blur-sm`;
-                    const activeClasses = isUnlocked ? `${memory.colorClass} shadow-lg` : "bg-slate-800/80 border-slate-700 hover:border-slate-500";
-                    const iconBgClasses = isUnlocked ? "bg-slate-900/50" : "bg-slate-700/80";
-                    const iconHtml = isUnlocked 
-                        ? `<i data-lucide="${memory.icon}" class="w-8 h-8 ${memory.textColorClass}"></i>`
-                        : `<i data-lucide="lock" class="w-8 h-8 text-slate-500"></i>`;
-                    const titleClass = isUnlocked ? memory.textColorClass : "text-slate-500";
-                    
+                    const cover = memory.images && memory.images.length ? memory.images[0] : '';
+                    const titleClass = isUnlocked ? memory.textColorClass : "text-slate-300";
+                    const chapter = getChapterMeta(memory);
                     return `
-                        <div onclick="unlockMemory(${memory.id})" class="${baseClasses} ${activeClasses}">
-                            <div class="flex items-start gap-4">
-                                <div class="p-3 rounded-lg ${iconBgClasses} transition-colors border border-white/5">
-                                    ${iconHtml}
+                        <div onclick="unlockMemory(${memory.id})" class="memory-card-album relative rounded-[1.35rem] border ${isUnlocked ? 'border-white/16 hover:border-yellow-200/35' : 'border-slate-700/80 hover:border-slate-500'} text-left transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer group ${gridPosClass} ${isUnlocked ? '' : 'opacity-95'}">
+                            <div class="memory-photo-frame polaroid-frame relative mx-4 mt-4 h-44 rounded-[1.15rem] overflow-hidden border border-white/10 ${isUnlocked ? '' : 'undeveloped-frame'}">
+                                <div class="album-tape"></div>
+                                ${isUnlocked && cover ? `<img src="${cover}" alt="${memory.title}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />` : `<div class="h-full w-full flex items-center justify-center flex-col text-center px-4"><div class="text-[11px] font-black uppercase tracking-[.28em] text-slate-500">скрытая глава</div><i data-lucide="image-off" class="w-12 h-12 text-slate-600 my-3"></i><div class="text-sm text-slate-400">Пленка еще не проявлена</div></div>`}
+                                <div class="absolute left-3 top-3 chapter-ribbon rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[.18em] ${isUnlocked ? 'text-yellow-100' : 'text-slate-300'}">
+                                    ${chapter.chapter}
                                 </div>
-                                <div>
-                                    <h3 class="text-xl font-bold mb-1 ${titleClass}">
-                                        ${isUnlocked ? memory.title : 'Достижение заблокировано'}
-                                    </h3>
-                                    <p class="text-slate-400 text-sm font-medium">
-                                        ${isUnlocked ? memory.game : 'Кликните, чтобы разблокировать'}
-                                    </p>
+                                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+                                    <div class="rounded-xl bg-black/55 backdrop-blur px-3 py-2 border border-white/10">
+                                        <div class="text-[10px] uppercase tracking-[.18em] text-slate-400 font-black">${isUnlocked ? chapter.openLabel : chapter.closedLabel}</div>
+                                        ${isUnlocked ? `<div class="text-sm font-bold text-white truncate max-w-[210px]">${memory.game}</div>` : `<div class="text-sm font-bold text-slate-300 truncate max-w-[210px]">Неизвестное воспоминание</div>`}
+                                    </div>
+                                    <div class="h-11 w-11 shrink-0 rounded-2xl border border-white/10 bg-slate-950/75 flex items-center justify-center">
+                                        ${isUnlocked ? `<i data-lucide="${memory.icon}" class="w-6 h-6 ${memory.textColorClass}"></i>` : `<i data-lucide="sparkles" class="w-6 h-6 text-slate-500"></i>`}
+                                    </div>
+                                </div>
+                                <div class="photo-caption">
+                                    <span>${isUnlocked ? memory.game : 'скрытая глава'}</span>
+                                    <span>${chapter.chapter}</span>
                                 </div>
                             </div>
-                            ${isUnlocked ? `<div class="absolute top-4 right-4 text-emerald-400 animate-zoom-in drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"><i data-lucide="check-circle-2" class="w-6 h-6"></i></div>` : ''}
+                            <div class="relative p-5 pt-4">
+                                <h3 class="text-xl font-black mb-2 ${titleClass} leading-tight">
+                                    ${isUnlocked ? memory.title : 'Неоткрытая страница альбома'}
+                                </h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    ${isUnlocked ? 'Открой страницу альбома, чтобы посмотреть кадры, медиа и историю этого воспоминания.' : 'Пройди мини-испытание, чтобы проявить снимок, открыть новую главу и добавить трофей в коллекцию.'}
+                                </p>
+                                ${isUnlocked ? `<div class="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-300/25 bg-emerald-400/10 px-3 py-1 text-xs font-black uppercase tracking-wider text-emerald-300"><i data-lucide="bookmark-check" class="w-4 h-4"></i> страница сохранена</div>` : `<div class="mt-4 inline-flex items-center gap-2 rounded-full border border-slate-600 bg-slate-950/45 px-3 py-1 text-xs font-black uppercase tracking-wider text-slate-400"><i data-lucide="film" class="w-4 h-4"></i> открыть главу</div>`}
+                            </div>
                         </div>
                     `;
                 }).join('');
 
                 html = `
-                    <div class="max-w-6xl w-full animate-slide-up">
+                    <div class="max-w-7xl w-full animate-slide-up memory-album-shell rounded-[2rem] p-4 md:p-7">
+                        <span class="album-page-corner tl"></span><span class="album-page-corner tr"></span><span class="album-page-corner bl"></span><span class="album-page-corner br"></span>
                         <div class="text-center mb-10">
-                            <h2 class="text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 tracking-tight">
-                                ДОСТИЖЕНИЯ СОВМЕСТНЫХ ИГР
+                            <div class="album-title-badge inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-black uppercase tracking-[.28em] text-yellow-100 mb-5">
+                                <span>📖</span> личный игровой альбом
+                            </div>
+                            <h2 class="text-4xl md:text-6xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-pink-200 to-cyan-200 tracking-tight">
+                                ПРОХОЖДЕНИЕ ВОСПОМИНАНИЙ
                             </h2>
-                            <p class="text-slate-400 text-lg mb-6">
-                                Разблокируй все воспоминания, чтобы получить Платиновый Трофей!
+                            <p class="text-slate-300 text-lg mb-6 max-w-3xl mx-auto leading-relaxed">
+                                Каждая игра — это отдельная глава, каждая ачивка — тёплое воспоминание, а весь путь вместе превращается в личный альбом нашего кооп-прохождения.
                             </p>
                             
-                            <!-- Стилизованный прогресс-бар -->
-                            <div class="inline-flex flex-col items-center gap-2 bg-slate-800/80 backdrop-blur-sm p-4 rounded-xl border border-slate-700 shadow-xl min-w-[300px]">
-                                <div class="flex justify-between w-full text-sm font-bold text-slate-300 uppercase tracking-wider">
-                                    <span>Прогресс</span>
-                                    <span class="${allUnlocked ? 'text-emerald-400' : 'text-fuchsia-400'}">${unlockedMemories.length}/${memories.length}</span>
-                                </div>
-                                <div class="w-full h-4 bg-slate-900 rounded-full overflow-hidden border border-slate-700 shadow-inner p-0.5">
-                                    <div class="h-full rounded-full transition-all duration-700 relative overflow-hidden bg-gradient-to-r from-fuchsia-600 to-cyan-500" style="width: ${progress}%">
-                                        <div class="absolute inset-0 progress-stripes opacity-30 animate-[slide_1s_linear_infinite]"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            ${renderMiniInventory('compact')}
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
                             ${cardsHtml}
                         </div>
 
                         ${allUnlocked ? `
-                            <div class="flex justify-center animate-slide-up mb-10">
-                                <button onclick="setScreen('final')" class="py-4 px-10 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-black rounded-xl text-xl transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-emerald-300/50">
-                                    <i data-lucide="trophy" class="w-7 h-7"></i> ПОЛУЧИТЬ НАГРАДУ!
+                            <div class="flex justify-center animate-slide-up mb-4">
+                                <button onclick="setScreen('final')" class="py-4 px-10 bg-gradient-to-r from-yellow-500 via-amber-400 to-cyan-400 hover:from-yellow-400 hover:to-cyan-300 text-slate-950 font-black rounded-2xl text-xl transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 shadow-[0_0_35px_rgba(250,204,21,0.35)] border border-yellow-100/70">
+                                    <i data-lucide="trophy" class="w-7 h-7"></i> ОТКРЫТЬ ФИНАЛЬНУЮ СТРАНИЦУ
                                 </button>
                             </div>
                         ` : ''}
@@ -378,42 +1757,69 @@
             // ЭКРАН 3: Финальное поздравление
             else if (currentScreen === 'final') {
                 html = `
-                    <div class="max-w-3xl w-full text-center animate-zoom-in">
-                        <div class="text-6xl mb-8 flex justify-center gap-6">
-                            <i data-lucide="sparkles" class="w-16 h-16 text-yellow-400 animate-bounce" style="animation-delay: 75ms;"></i>
-                            <i data-lucide="award" class="w-20 h-20 text-fuchsia-400 animate-bounce" style="animation-delay: 150ms;"></i>
-                            <i data-lucide="crown" class="w-16 h-16 text-cyan-400 animate-bounce" style="animation-delay: 300ms;"></i>
-                        </div>
-                        
-                        <h1 class="text-5xl md:text-7xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-cyan-400 to-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)] tracking-tighter">
-                            ПЛАТИНА ПОЛУЧЕНА!
-                        </h1>
-                        <p class="text-xl text-emerald-400 font-bold tracking-widest uppercase mb-10 drop-shadow-md">Achievement Unlocked: Идеальный тиммейт</p>
-                        
-                        <div class="bg-slate-800/90 backdrop-blur-md border-2 border-slate-600 rounded-3xl p-8 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden text-left">
-                            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-fuchsia-500 via-yellow-400 to-cyan-500"></div>
-                            
-                            <h2 class="text-3xl font-black mb-8 text-white text-center">
-                                С Днем Рождения! 💛
-                            </h2>
-                            
-                            <div class="space-y-6 text-lg text-slate-300 leading-relaxed">
-                                <p>
-                                    Мы закрыли столько невероятных квестов вместе и каждый из них — это отдельное теплое воспоминание. С тобой совершенно не страшно выживать ни в каких мирах. Убегать от жутких маньяков, часами бить боссов в забавных костюмах уточек или пытаться не сойти с ума над очередной загадкой с часами — с тобой всё это превращается в самый лучший вечер.
-                                </p>
-                                <p>
-                                    Ты правда самый лучший, понимающий и родной напарник по коопу, о котором можно только мечтать. Даже когда мы творим какую-то нелепую дичь, жутко тупим или я покорно позирую, пока меня ест медведь — мы всегда смеемся до слез. А наша традиция забить на любую надвигающуюся катастрофу, улыбнуться и сказать «Так, падажи. Сфоткаемся!» — делает каждый наш скриншот самым ценным, согревающим душу лутом в моей коллекции.
-                                </p>
-                                <p class="space-y-6 text-lg text-slate-300 leading-relaxed">
-                                    Официально анонсирую запуск твоего личного, масштабного и очень счастливого DLC «Новый Год Жизни»! Желаю, чтобы в нем было поменьше багов, пинг всегда держался на нуле, жизненная стамина восстанавливалась мгновенно(желательно от вкусного кофе и хорошего сна),а удача всегда была прокачана на максимум. Впереди у нас еще столько непройденных миров и таких уютных, ламповых вечеров в Discord. Я всегда готов нажать кнопку готовности, куда бы мы ни отправились!
+                    <div class="max-w-6xl w-full animate-fade-in">
+                        <div class="final-cinematic-shell rounded-[2.4rem] p-5 md:p-9 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
+                            <div class="final-spotlight"></div>
+                            <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-transparent via-yellow-300 to-transparent"></div>
+
+                            <div class="relative z-10 text-center mb-10 final-reveal-card">
+                                <div class="inline-flex items-center gap-2 rounded-full border border-yellow-300/25 bg-yellow-300/10 px-4 py-2 text-xs font-black uppercase tracking-[.32em] text-yellow-100">
+                                    <span>✨</span> финальная страница альбома
+                                </div>
+                                <div class="mt-6 mx-auto flex h-28 w-28 items-center justify-center rounded-[2rem] border border-yellow-200/40 bg-yellow-300/10 text-6xl shadow-[0_0_55px_rgba(250,204,21,.22)]">🏆</div>
+                                <h1 class="mt-6 text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-amber-300 to-cyan-200 drop-shadow-[0_0_18px_rgba(250,204,21,0.35)] tracking-tight">
+                                    ПЛАТИНОВЫЙ ТРОФЕЙ ДРУЖБЫ РАЗБЛОКИРОВАН
+                                </h1>
+                                <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-slate-300 leading-relaxed">
+                                    Все главы открыты. Все воспоминания собраны. Кооп-прохождение завершено на 100% — и превратилось в тёплый личный альбом.
                                 </p>
                             </div>
 
-                            <div class="mt-10 flex flex-wrap justify-center gap-4">
-                                <div class="inline-flex items-center gap-2 bg-slate-900/80 px-6 py-3 rounded-xl border border-fuchsia-500/50 shadow-[0_0_15px_rgba(217,70,239,0.2)]">
-                                    <i data-lucide="gamepad-2" class="w-5 h-5 text-fuchsia-400"></i>
-                                    <span class="font-medium text-slate-200">Статус: <span class="text-fuchsia-400 font-bold">Готов к новым играм!</span></span>
+                            <div class="gold-divider mb-8 relative z-10"></div>
+                            
+                            <div class="grid lg:grid-cols-[1.08fr_.92fr] gap-6 text-left relative z-10">
+                                <div class="final-message-card rounded-3xl border border-white/10 bg-slate-950/55 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                                    <div class="absolute right-1 top-4 text-7xl opacity-15">💛</div>
+                                    <h2 class="text-3xl md:text-4xl font-black mb-6 text-white">
+                                        С Днём Рождения!
+                                    </h2>
+                                    <div class="space-y-5 text-lg text-slate-300 leading-relaxed">
+                                        <p>
+                                            Этот альбом — напоминание о том, сколько тёплых моментов, смешных вечеров и по-настоящему дорогих воспоминаний уже есть у нас. Каждая совместная игра стала не просто прохождением, а отдельной историей, которую хочется бережно сохранить.
+                                        </p>
+                                        <p>
+                                            Спасибо тебе за твою доброту, поддержку, лёгкость и за то особое чувство уюта, которое появляется рядом с тобой. С тобой даже обычные вечера становятся чем-то важным, светлым и очень родным.
+                                        </p>
+                                        <p>
+                                            Я очень хочу, чтобы новый год твоей жизни был счастливым, спокойным, красивым и наполненным тем, что действительно радует сердце. Пусть рядом будут люди, с которыми тепло, а впереди — ещё много поводов улыбаться, мечтать и собирать новые главы этого альбома.
+                                        </p>
+                                    </div>
+                                    <div class="final-quote mt-8 rounded-2xl px-5 py-4 text-yellow-50">
+                                        <div class="text-sm md:text-base font-medium leading-relaxed">
+                                            Ты — человек, с которым хочется проходить дальше и игру, и жизнь: с доверием, с теплом и с ощущением, что рядом свой человек.
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="space-y-6">
+                                    <div class="album-story-card rounded-3xl border border-yellow-300/25 bg-gradient-to-br from-yellow-300/12 to-slate-950/65 p-6 shadow-2xl">
+                                        <div class="text-xs font-black uppercase tracking-[.28em] text-yellow-200/80 mb-3">итог прохождения</div>
+                                        <div class="grid grid-cols-3 gap-3 text-center mb-5">
+                                            <div class="rounded-2xl bg-slate-950/55 border border-white/10 p-4"><div class="text-3xl font-black text-yellow-200">10</div><div class="text-xs uppercase tracking-wider text-slate-400">глав</div></div>
+                                            <div class="rounded-2xl bg-slate-950/55 border border-white/10 p-4"><div class="text-3xl font-black text-cyan-200">10</div><div class="text-xs uppercase tracking-wider text-slate-400">трофеев</div></div>
+                                            <div class="rounded-2xl bg-slate-950/55 border border-white/10 p-4"><div class="text-3xl font-black text-pink-200">1</div><div class="text-xs uppercase tracking-wider text-slate-400">особенный дуэт</div></div>
+                                        </div>
+                                    </div>
+                                    ${renderPlatinumChestSection()}
+                                </div>
+                            </div>
+
+                            <div class="relative z-10 mt-8">
+                                ${renderMiniInventory('final')}
+                            </div>
+                            <div class="relative z-10 mt-6">
+                                ${renderFinalCreditsSection()}
                             </div>
                         </div>
                     </div>
@@ -421,6 +1827,16 @@
             }
 
             app.innerHTML = html;
+
+            if (currentScreen !== 'intro' && currentScreen !== 'loading') {
+                app.insertAdjacentHTML('beforeend', renderUtilityButtons());
+            }
+            app.insertAdjacentHTML('beforeend', renderStreamerOverlay());
+            app.insertAdjacentHTML('beforeend', renderTrophyGalleryModal());
+            app.insertAdjacentHTML('beforeend', renderScreenshotHint());
+            if (creditsOpen) {
+                app.insertAdjacentHTML('beforeend', renderCreditsModal());
+            }
 
             // Модальное окно (когда кликаем на ачивку)
             if (selectedMemory) {
@@ -442,14 +1858,13 @@
 
                 const modalHtml = `
                     <div id="modal-backdrop" onclick="closeModal(event)" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 z-50 animate-fade-in">
-                        <div class="bg-slate-800 border border-slate-600 rounded-2xl max-w-4xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl animate-zoom-in ring-1 ring-white/10" onclick="event.stopPropagation()">
+                        <div class="${getModalThemeClass(selectedMemory)} bg-slate-800 border border-slate-600 rounded-2xl max-w-4xl w-full max-h-[95vh] flex flex-col overflow-hidden shadow-2xl animate-zoom-in ring-1 ring-white/10" onclick="event.stopPropagation()">
                             
-                            <div class="relative w-full aspect-video bg-black flex items-center justify-center border-b border-slate-700 overflow-hidden group shrink-0">
+                            <div id="media-frame" class="relative w-full aspect-video bg-black flex items-center justify-center border-b border-slate-700 overflow-hidden group shrink-0">
                                 
                                 <div id="media-container" class="w-full h-full absolute inset-0 flex items-center justify-center">
                                     ${mediaContentHtml}
                                 </div>
-                                
                                 <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/60 p-2 rounded-full text-white hover:bg-slate-700 transition-colors backdrop-blur-md z-20 border border-white/20 hover:scale-110">
                                     <i data-lucide="x" class="w-6 h-6"></i>
                                 </button>
@@ -471,7 +1886,7 @@
                                 ` : ''}
                             </div>
 
-                            <div class="p-6 md:p-8 overflow-y-auto bg-gradient-to-b from-slate-800 to-slate-900 relative">
+                            <div class="p-6 md:p-8 overflow-y-auto bg-gradient-to-b from-slate-800/95 to-slate-900/95 relative">
                                 <div class="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
                                     <i data-lucide="${selectedMemory.icon}" class="w-full h-full"></i>
                                 </div>
@@ -506,7 +1921,16 @@
                 app.insertAdjacentHTML('beforeend', modalHtml);
             }
 
+            if (challengeMemory) {
+                app.insertAdjacentHTML('beforeend', getChallengeModalHtml());
+            }
+
+            if (platinumChestOpen) {
+                app.insertAdjacentHTML('beforeend', renderPlayerPassportModal());
+            }
+
             
+            updateSiteMood();
             lucide.createIcons();
         }
 
@@ -529,19 +1953,46 @@
 
         // Функции управления
         window.setScreen = function(screen) {
+            playUiSound(screen === 'final' ? 'success' : 'click');
+            trophyGalleryOpen = false;
+            if (currentScreen !== screen && (screen === 'quest' || screen === 'final')) {
+                showLoadingScreen(screen);
+                return;
+            }
             currentScreen = screen;
+            if (screen !== 'final') platinumChestOpen = false;
+            creditsOpen = false;
             render();
+
+            if (screen === 'final') {
+                confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+            }
         };
 
         window.unlockMemory = function(id) {
-            if (!unlockedMemories.includes(id)) {
-                unlockedMemories.push(id);
+            playUiSound('click');
+            const memory = memories.find(m => m.id === id);
+            if (unlockedMemories.includes(id)) {
+                selectedMemory = memory;
+                currentImageIndex = 0;
+                render();
+                return;
             }
-            
-            selectedMemory = memories.find(m => m.id === id);
-            currentImageIndex = 0;
+            startChallenge(id);
+        };
 
+        window.openPlatinumChest = function() {
+            playUiSound('chest');
+            platinumChestOpen = true;
+            confetti({ particleCount: 180, spread: 110, origin: { y: 0.55 } });
             render();
+        };
+
+        window.closePlatinumChest = function(e) {
+            if (!e || e.target.id === 'passport-backdrop' || e.target.closest('button[onclick="closePlatinumChest()"]')) {
+                platinumChestOpen = false;
+                render();
+            }
         };
 
         window.closeModal = function(e) {
@@ -587,7 +2038,75 @@
             updateCarouselUI();
         };
 
+
+        // === ДОПОЛНИТЕЛЬНАЯ МАГИЯ ===
+        let secretClicks = 0;
+
+        window.secretAchievement = function() {
+            secretClicks++;
+
+            createParticles(window.innerWidth / 2, 120);
+
+            if (secretClicks >= 10) {
+                confetti({
+                    particleCount: 250,
+                    spread: 180,
+                    origin: { y: 0.4 }
+                });
+
+                setTimeout(() => {
+                    alert('🎉 СЕКРЕТНАЯ АЧИВКА РАЗБЛОКИРОВАНА: Самый внимательный тиммейт');
+                }, 300);
+
+                secretClicks = 0;
+            }
+        };
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 14; i++) {
+                const particle = document.createElement('div');
+
+                particle.className = 'fixed w-2 h-2 rounded-full pointer-events-none z-[9999]';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 40 + Math.random() * 90;
+
+                particle.animate([
+                    {
+                        transform: 'translate(0,0) scale(1)',
+                        opacity: 1
+                    },
+                    {
+                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 900,
+                    easing: 'cubic-bezier(.17,.67,.83,.67)'
+                });
+
+                setTimeout(() => particle.remove(), 900);
+            }
+        }
+
+        window.addEventListener('click', (e) => {
+            createParticles(e.clientX, e.clientY);
+        });
+
         
+        document.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.group').forEach(card => {
+                card.style.transform = '';
+            });
+        });
+
+
+        setInterval(updatePingStatus, 950);
         render();
     </script>
 </body>
