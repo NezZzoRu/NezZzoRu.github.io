@@ -1,9 +1,10 @@
-# Manual publication or the explicitly approved MVP 1.0 release tag
+# Manual publication or an explicitly updated release manifest on main
 name: Deploy static content to Pages
 
 on:
   push:
-    tags: ["v1.0.0"]
+    branches: ["main"]
+    paths: [".github/releases/mvp-1.0.json"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
