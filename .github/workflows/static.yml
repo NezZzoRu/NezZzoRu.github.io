@@ -1,11 +1,9 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Manual publication or the explicitly approved MVP 1.0 release tag
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
+    tags: ["v1.0.0"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -31,13 +29,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test MVP
+        run: npm test
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Prepare MVP site
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          cp -R src _site/src
+          touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Only application files; no legacy page, videos, tests, or user backups.
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
